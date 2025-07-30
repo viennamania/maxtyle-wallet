@@ -85,7 +85,7 @@ import { token } from "thirdweb/extensions/vote";
 import { N } from "ethers";
 
 
-const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
+const contractAddress = "0xC23661d394d2df3b59c3A0cf3D13be26fBCE002B"; // USDT on Polygon
 
 
 
@@ -198,7 +198,7 @@ function AgentPage(
   
         if (!result) return;
     
-        setBalance( Number(result) / 10 ** 6 );
+        setBalance( Number(result) / 10 ** 18 );
   
       };
   
@@ -520,7 +520,7 @@ function AgentPage(
             //console.log("result", result);
             allowanceAmount = Number(result);
 
-            if (allowanceAmount < price * 10 ** 6) {
+            if (allowanceAmount < price * 10 ** 18) {
                 
                 //throw new Error('USDT 토큰을 먼저 채굴 NFT 발행 계약에 승인해주세요');
 
@@ -529,7 +529,7 @@ function AgentPage(
                 const transactionApprove = approve({
                     contract: contract,
                     spender: erc1155ContractAddress,
-                    amount: price * 10 ** 6,
+                    amount: price * 10 ** 18,
                 });
 
                 const transactionResultApprove = await sendAndConfirmTransaction({

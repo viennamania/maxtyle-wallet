@@ -94,7 +94,7 @@ const wallets = [
 
 
 
-const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
+const contractAddress = "0xC23661d394d2df3b59c3A0cf3D13be26fBCE002B"; // USDT on Polygon
 
 
 // get a contract
@@ -378,7 +378,7 @@ function ChatPageContent(
   
       //console.log(result);
   
-      setBalance( Number(result) / 10 ** 6 );
+      setBalance( Number(result) / 10 ** 18 );
 
     };
 

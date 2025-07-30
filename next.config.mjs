@@ -43,7 +43,7 @@ const nextConfig = {
     return [
       {
         source: '/',
-        destination: '/ko/bsc',
+        destination: '/ko/polygon',
         permanent: true,
       },
     ]

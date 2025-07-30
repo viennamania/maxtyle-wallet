@@ -79,7 +79,7 @@ import { token } from "thirdweb/extensions/vote";
 
 
 // USDT Token (USDT)
-const tokenContractAddressUSDT = '0xc2132D05D31c914a87C6611C10748AEb04B58e8F';
+const tokenContractAddressUSDT = '0xC23661d394d2df3b59c3A0cf3D13be26fBCE002B';
 
 
 

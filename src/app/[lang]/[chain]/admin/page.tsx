@@ -73,7 +73,7 @@ const wallets = [
 
 
 
-const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
+const contractAddress = "0xC23661d394d2df3b59c3A0cf3D13be26fBCE002B"; // USDT on Polygon
 
 const contractAddressKCT = "0xEb0a5ea0001Aa9f419BbaF8ceDad265A60f0B10f"; // KCT on Polygon
 
@@ -151,7 +151,7 @@ function HomeContent() {
 
       if (!result) return;
   
-      setBalance( Number(result) / 10 ** 6 );
+      setBalance( Number(result) / 10 ** 18 );
 
     };
 
@@ -182,7 +182,7 @@ function HomeContent() {
       });
       //console.log(result);
       if (!result) return;
-      setClaimWalletBalance( Number(result) / 10 ** 6 );
+      setClaimWalletBalance( Number(result) / 10 ** 18 );
     };
     getClaimWalletBalance();
     const interval = setInterval(() => {
@@ -391,7 +391,7 @@ function HomeContent() {
           address: selectUser,
         });
 
-        setUserBalanceUsdt( Number(result1) / 10 ** 6 );
+        setUserBalanceUsdt( Number(result1) / 10 ** 18 );
 
       }
 

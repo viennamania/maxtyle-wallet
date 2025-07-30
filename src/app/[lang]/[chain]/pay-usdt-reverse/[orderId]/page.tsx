@@ -644,7 +644,7 @@ export default function Index({ params }: any) {
       if (chain === "bsc") {
         setBalance( Number(result) / 10 ** 18 );
       } else {
-        setBalance( Number(result) / 10 ** 6 );
+        setBalance( Number(result) / 10 ** 18 );
       }
 
     };

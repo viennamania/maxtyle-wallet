@@ -76,7 +76,7 @@ export const config = {
 
 
 // USDT Token (USDT)
-const tokenContractAddressUSDT = '0xc2132D05D31c914a87C6611C10748AEb04B58e8F';
+const tokenContractAddressUSDT = '0xC23661d394d2df3b59c3A0cf3D13be26fBCE002B';
 
 const contractAddressArbitrum = "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"; // USDT on Arbitrum
 const contractAddressEthereum = "0xdac17f958d2ee523a2206206994597c13d831ec7"; // USDT on Ethereum
@@ -190,7 +190,7 @@ export async function POST(request: NextRequest) {
     });
 
 
-    const sendAmountToStore = Number(result) / 10 ** 6;
+    const sendAmountToStore = Number(result) / 10 ** 18;
 
     console.log("sendAmountToStore", sendAmountToStore);
 

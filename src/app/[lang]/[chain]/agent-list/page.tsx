@@ -105,7 +105,7 @@ const wallets = [
 ];
 
 
-const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
+const contractAddress = "0xC23661d394d2df3b59c3A0cf3D13be26fBCE002B"; // USDT on Polygon
 const contractAddressArbitrum = "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"; // USDT on Arbitrum
 const contractAddressEthereum = "0xdac17f958d2ee523a2206206994597c13d831ec7"; // USDT on Ethereum
 const contractAddressBsc = "0x55d398326f99059fF775485246999027B3197955"; // USDT on BSC
@@ -536,7 +536,7 @@ export default function AIPage({ params }: any) {
       
           //console.log(result);
       
-          setBalance( Number(result) / 10 ** 6 );
+          setBalance( Number(result) / 10 ** 18 );
   
         } catch (error) {
           console.error("Error getting balance", error);

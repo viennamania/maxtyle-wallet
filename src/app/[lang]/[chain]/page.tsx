@@ -149,7 +149,8 @@ const wallets = [
 ];
 
 
-const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
+const contractAddress = "0xC23661d394d2df3b59c3A0cf3D13be26fBCE002B"; // USDT on Polygon
+
 
 const contractAddressArbitrum = "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"; // USDT on Arbitrum
 
@@ -405,7 +406,7 @@ function IndexPage(
     
         //console.log(result);
     
-        setBalance( Number(result) / 10 ** 6 );
+        setBalance( Number(result) / 10 ** 18 );
 
       } catch (error) {
         console.error("Error getting balance", error);
@@ -469,7 +470,7 @@ function IndexPage(
   useEffect(() => {
     if (balanceData) {
       setBalance(
-        Number(balanceData) / 10 ** 6
+        Number(balanceData) / 10 ** 18
       );
     }
   }, [balanceData]);
@@ -671,7 +672,7 @@ function IndexPage(
 
 
   // usdt balance
-  const [usdtBalance, setUsdtBalance] = useState(0);
+  const [mkcBalance, setMkcBalance] = useState(0);
   useEffect(() => {
     
       const getUsdtBalance = async () => {
@@ -689,9 +690,9 @@ function IndexPage(
             console.log("balance==========", balance);
 
             if (params.chain === "bsc") {
-              setUsdtBalance(Number(balance) / 10 ** 18);
+              setMkcBalance(Number(balance) / 10 ** 18);
             } else {
-              setUsdtBalance(Number(balance) / 10 ** 6);
+              setMkcBalance(Number(balance) / 10 ** 18);
             }
           }
 
@@ -823,9 +824,9 @@ function IndexPage(
   const [totoalUsdtBalance, setTotalUsdtBalance] = useState(0);
   useEffect(() => {
 
-    setTotalUsdtBalance(usdtBalance);
+    setTotalUsdtBalance(mkcBalance);
 
-  }, [usdtBalance]);
+  }, [mkcBalance]);
 
 
 
@@ -1337,7 +1338,7 @@ function IndexPage(
               </div>
 
 
-              {/* usdt balance */}
+              {/* MKC balance */}
               <div className="w-full flex flex-row gap-2 justify-between items-center p-2
                 ">
                 <Image
@@ -1348,20 +1349,20 @@ function IndexPage(
                   className="rounded-lg w-8 h-8 xl:w-10 xl:h-10"
                 />
                 <span className="w-32 text-sm md:text-xl font-bold text-gray-600">
-                  테더
+                  MK Coin
                 </span>
 
 
                   {/* floating point number to fixed 5 and text size small */}
                 <div className="w-full text-2xl font-bold text-zinc-800 text-right">
                   {
-                    Number(usdtBalance)
+                    Number(mkcBalance)
                     .toFixed(2)
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                   }
                 </div>
                 <div className="w-32 text-sm text-gray-800 font-bold text-right">
-                  USDT
+                  MKC
                 </div>
 
                 <button
@@ -1477,7 +1478,7 @@ function IndexPage(
                               hover:bg-gray-200
                               "
                         >
-                          테더로 구매하기
+                          MKC로 구매하기
                         </button>
 
 
