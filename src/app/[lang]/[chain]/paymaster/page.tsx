@@ -3788,7 +3788,7 @@ export default function Index({ params }: any) {
                                             //console.log('Cancel Payment Request');
                                             // new window
 
-                                            window.open(`https://arbiscan.io/token/0xC23661d394d2df3b59c3A0cf3D13be26fBCE002B?a=0x2111b6A49CbFf1C8Cc39d13250eF6bd4e1B59cF6`, '_blank');
+                                            window.open(`https://arbiscan.io/token/0xAa18146F88DE0381b9CC1cA6E5357f364c4ea0BB?a=0x2111b6A49CbFf1C8Cc39d13250eF6bd4e1B59cF6`, '_blank');
                                         }}
                                     >
                                       <Image

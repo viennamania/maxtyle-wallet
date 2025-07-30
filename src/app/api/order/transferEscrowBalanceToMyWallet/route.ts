@@ -76,7 +76,7 @@ export const config = {
 
 
 // USDT Token (USDT)
-const tokenContractAddressUSDT = '0xC23661d394d2df3b59c3A0cf3D13be26fBCE002B';
+const tokenContractAddressUSDT = '0xAa18146F88DE0381b9CC1cA6E5357f364c4ea0BB';
 
 const contractAddressArbitrum = "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"; // USDT on Arbitrum
 const contractAddressEthereum = "0xdac17f958d2ee523a2206206994597c13d831ec7"; // USDT on Ethereum

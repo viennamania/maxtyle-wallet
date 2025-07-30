@@ -94,7 +94,7 @@ const wallets = [
 
 
 
-const contractAddress = "0xC23661d394d2df3b59c3A0cf3D13be26fBCE002B"; // USDT on Polygon
+const contractAddress = "0xAa18146F88DE0381b9CC1cA6E5357f364c4ea0BB"; // USDT on Polygon
 
 
 // get a contract
