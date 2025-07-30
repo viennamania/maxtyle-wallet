@@ -742,7 +742,7 @@ export default function SendUsdt({ params }: any) {
 
               <div className='flex flex-row items-center space-x-2'>
                 <Image
-                  src="/logo-tether.png"
+                  src="/logo-mkc.png.png"
                   alt="USDT"
                   width={35}
                   height={35}

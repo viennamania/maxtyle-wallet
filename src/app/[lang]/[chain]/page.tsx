@@ -149,14 +149,14 @@ const wallets = [
 ];
 
 
-const contractAddress = "0xC23661d394d2df3b59c3A0cf3D13be26fBCE002B"; // USDT on Polygon
+const contractAddress = "0xC23661d394d2df3b59c3A0cf3D13be26fBCE002B"; // MKC on Polygon
 
 
-const contractAddressArbitrum = "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"; // USDT on Arbitrum
+const contractAddressArbitrum = "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"; // MKC on Arbitrum
 
-const contractAddressEthereum = "0xdac17f958d2ee523a2206206994597c13d831ec7"; // USDT on Ethereum
+const contractAddressEthereum = "0xdac17f958d2ee523a2206206994597c13d831ec7"; // MKC on Ethereum
 
-const contractAddressBsc = "0x55d398326f99059fF775485246999027B3197955"; // USDT on BSC
+const contractAddressBsc = "0x55d398326f99059fF775485246999027B3197955"; // MKC on BSC
 
 
 const contractAddressMKRW = "0xEb0a5ea0001Aa9f419BbaF8ceDad265A60f0B10f"; // MKRW on BSC
@@ -286,13 +286,13 @@ function IndexPage(
     My_Sell_Trades: "",
     Buy: "",
     Sell: "",
-    Buy_USDT: "",
-    Sell_USDT: "",
+    Buy_MKC: "",
+    Sell_MKC: "",
     Contact_Us: "",
     Buy_Description: "",
     Sell_Description: "",
-    Send_USDT: "",
-    Pay_USDT: "",
+    Send_MKC: "",
+    Pay_MKC: "",
     Coming_Soon: "",
     Open_Orders: "",
     Please_connect_your_wallet_first: "",
@@ -325,13 +325,13 @@ function IndexPage(
     My_Sell_Trades,
     Buy,
     Sell,
-    Buy_USDT,
-    Sell_USDT,
+    Buy_MKC,
+    Sell_MKC,
     Contact_Us,
     Buy_Description,
     Sell_Description,
-    Send_USDT,
-    Pay_USDT,
+    Send_MKC,
+    Pay_MKC,
     Coming_Soon,
     Open_Orders,
     Please_connect_your_wallet_first,
@@ -1342,8 +1342,8 @@ function IndexPage(
               <div className="w-full flex flex-row gap-2 justify-between items-center p-2
                 ">
                 <Image
-                  src="/logo-tether.svg"
-                  alt="USDT"
+                  src="/logo-mkc.png"
+                  alt="MKC"
                   width={35}
                   height={35}
                   className="rounded-lg w-8 h-8 xl:w-10 xl:h-10"
@@ -1368,7 +1368,7 @@ function IndexPage(
                 <button
                   onClick={() => {
                     router.push(
-                      "/" + params.lang + "/" + params.chain + "/send-token/?token=USDT"
+                      "/" + params.lang + "/" + params.chain + "/send-token/?token=MKC"
                     );
                   }}
                   className="w-10 h-10"
@@ -1420,7 +1420,7 @@ function IndexPage(
                       bg-white p-0
                   ">
 
-                      {/* 1 USDT = 1340 MKRW */}
+                      {/* 1 MKC = 1340 MKRW */}
                       <div className="w-full flex flex-row gap-2 items-center justify-between p-5
                       ">
                         <div className="w-1/4 flex flex-row gap-2 items-center justify-start">
@@ -1440,7 +1440,7 @@ function IndexPage(
                               현재 환율
                             </div>
                             <div className="w-full text-sm text-zinc-800 font-bold text-right">
-                              1 USDT = { usdtRate } MKRW
+                              1 MKC = { usdtRate } MKRW
                             </div>
                           </div>
 
@@ -1538,8 +1538,8 @@ function IndexPage(
                   ">
                     <div className="w-1/4 flex flex-row gap-2 items-center justify-start">
                         <Image
-                            src="/logo-tether.svg"
-                            alt="USDT"
+                            src="/logo-mkc.png"
+                            alt="MKC"
                             width={50}
                             height={50}
                             className="rounded-lg w-10 h-10 xl:w-12 xl:h-12"
@@ -1553,7 +1553,7 @@ function IndexPage(
                           현재 환율
                         </div>
                         <div className="w-full text-sm text-zinc-800 font-bold text-right">
-                          1 USDT = { usdtRate } 원
+                          1 MKC = { usdtRate } 원
                         </div>
                       </div>
 
@@ -1562,7 +1562,7 @@ function IndexPage(
                           최소 구매량
                         </div>
                         <div className="w-full text-sm text-zinc-800 font-bold text-right">
-                          1 USDT
+                          1 MKC
                         </div>
                       </div>
 
@@ -1726,7 +1726,7 @@ function IndexPage(
                                           누적 리워드
                                       </div>
                                       <div className="w-full text-sm text-zinc-800 font-bold text-right">
-                                          0.00 USDT
+                                          0.00 MKC
                                       </div>
                                     </div>
 
@@ -1802,7 +1802,7 @@ function IndexPage(
         <div className="grid gap-4 lg:grid-cols-3 justify-center">
 
           <ArticleCard
-            title={`${Buy_USDT} - ${Open_Orders} (${countOfOpenOrders}) EA`}
+            title={`${Buy_MKC} - ${Open_Orders} (${countOfOpenOrders}) EA`}
             
             href={`${params.lang}/buy-usdt`}
 
@@ -1812,7 +1812,7 @@ function IndexPage(
           
             
           <ArticleCard
-            title={`${Sell_USDT} - ${Open_Orders} (${countOfOpenOrders}) EA`}
+            title={`${Sell_MKC} - ${Open_Orders} (${countOfOpenOrders}) EA`}
             href={`${params.lang}/sell-usdt`}
             description={Sell_Description}
           />
@@ -2172,7 +2172,7 @@ function Header(
       <h1 className="text-2xl md:text-6xl font-semibold md:font-bold tracking-tighter mb-6 text-yellow-500">
         MKRW Wallet
         <span className="text-zinc-300 inline-block mx-1"> + </span>
-        <span className="inline-block -skew-x-6 text-green-500 font-bold"> USDT </span>
+        <span className="inline-block -skew-x-6 text-green-500 font-bold"> MKC </span>
       </h1>
 
       <p className="text-gray-600
@@ -2229,7 +2229,7 @@ function MarketResources() {
         avatar="/icon-game.png"
         title="P2E Game"
         href="/"
-        description="Play to Earn games with USDT rewards"
+        description="Play to Earn games with MKC rewards"
       />
 
   
@@ -2237,14 +2237,14 @@ function MarketResources() {
         avatar="/icon-nft.png"
         title="NFT Marketplace"
         href="/"
-        description="Trade NFTs with USDT"
+        description="Trade NFTs with MKC"
       />
 
       <ArticleCard
         avatar="/icon-defi.png"
         title="DeFi Apps"
         href="/"
-        description="DeFi applications with USDT"
+        description="DeFi applications with MKC"
       />
 
     </div>
