@@ -15,7 +15,7 @@ export const polygonContractAddressUSDT = "0xAa18146F88DE0381b9CC1cA6E5357f364c4
 
 export const arbitrumContractAddressUSDT = "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"; // USDT on Arbitrum
 
-export const bscContractAddressUSDT = "0x55d398326f99059fF775485246999027B3197955"; // USDT on BSC
+export const bscContractAddressUSDT = "0xAa18146F88DE0381b9CC1cA6E5357f364c4ea0BB"; // USDT on BSC
 
 
 

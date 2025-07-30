@@ -134,7 +134,7 @@ const recipientWalletAddress = "0x2111b6A49CbFf1C8Cc39d13250eF6bd4e1B59cF6";
 const contractAddress = "0xAa18146F88DE0381b9CC1cA6E5357f364c4ea0BB"; // USDT on Polygon
 const contractAddressArbitrum = "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"; // USDT on Arbitrum
 const contractAddressEthereum = "0xdac17f958d2ee523a2206206994597c13d831ec7"; // USDT on Ethereum
-const contractAddressBsc = "0x55d398326f99059fF775485246999027B3197955"; // USDT on BSC
+const contractAddressBsc = "0xAa18146F88DE0381b9CC1cA6E5357f364c4ea0BB"; // USDT on BSC
 
 
 

@@ -156,7 +156,7 @@ const contractAddressArbitrum = "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"; //
 
 const contractAddressEthereum = "0xdac17f958d2ee523a2206206994597c13d831ec7"; // MKC on Ethereum
 
-const contractAddressBsc = "0x55d398326f99059fF775485246999027B3197955"; // MKC on BSC
+const contractAddressBsc = "0xAa18146F88DE0381b9CC1cA6E5357f364c4ea0BB"; // MKC on BSC
 
 
 const contractAddressMKRW = "0xEb0a5ea0001Aa9f419BbaF8ceDad265A60f0B10f"; // MKRW on BSC
@@ -559,7 +559,7 @@ function IndexPage(
 
 
 
-  const usdtRate = 1360;
+  const usdtRate = 1200;
 
  
 
@@ -671,12 +671,12 @@ function IndexPage(
 
 
 
-  // usdt balance
+  // mkc balance
   const [mkcBalance, setMkcBalance] = useState(0);
   useEffect(() => {
-    
-      const getUsdtBalance = async () => {
 
+      const getMkcBalance = async () => {
+        if (!address || !contract) return;
 
         if (address) {
           
@@ -702,16 +702,16 @@ function IndexPage(
 
 
 
-      address && getUsdtBalance();
+      getMkcBalance();
 
       // timer
       
       const interval = setInterval(() => {
-        address && getUsdtBalance();
+        address && getMkcBalance();
       }, 10000);
 
       return () => clearInterval(interval);
-      
+
   } , [address, contract, params.chain]);
 
 
@@ -1294,49 +1294,6 @@ function IndexPage(
 
 
 
-              {/* M point balance */}
-              <div className="w-full flex flex-row gap-2 justify-between items-center p-2
-                border-b border-gray-200
-                ">
- 
-                <Image
-                  src="/logo-mpoint.png"
-                  alt="MKRW"
-                  width={35}
-                  height={35}
-                  className="rounded-full w-8 h-8 xl:w-10 xl:h-10"
-                />
-                <span className="w-32 text-sm md:text-xl font-bold text-gray-600">
-                  포인트
-                </span>
-
-                <div className="w-full text-2xl font-bold text-zinc-800 text-right">
-                  {
-                    Number(MKRWBalance)
-                      .toFixed(0)
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                  }
-                </div>
-                <div className="w-32 text-sm text-gray-800 font-bold text-right">
-                  MKRW
-                </div>
-                <button
-                  onClick={() => {
-                    router.push(
-                      "/" + params.lang + "/" + params.chain + "/sell-mkrw"
-                    );
-                  }}
-                  className="w-10 h-10"
-                >
-                  <Image
-                    src="/goto-icon.webp"
-                    alt="Send"
-                    width={20}
-                    height={20}
-                  />
-                </button>
-              </div>
-
 
               {/* MKC balance */}
               <div className="w-full flex flex-row gap-2 justify-between items-center p-2
@@ -1348,7 +1305,7 @@ function IndexPage(
                   height={35}
                   className="rounded-lg w-8 h-8 xl:w-10 xl:h-10"
                 />
-                <span className="w-32 text-sm md:text-xl font-bold text-gray-600">
+                <span className="w-36 text-sm md:text-xl font-bold text-gray-600">
                   MK Coin
                 </span>
 
@@ -1383,6 +1340,53 @@ function IndexPage(
               </div>
 
 
+              {/* M point balance */}
+              <div className="w-full flex flex-row gap-2 justify-between items-center p-2
+                border-b border-gray-200
+                ">
+ 
+                <Image
+                  src="/logo-mpoint.png"
+                  alt="MKRW"
+                  width={35}
+                  height={35}
+                  className="rounded-full w-8 h-8 xl:w-10 xl:h-10"
+                />
+                <span className="w-36  text-sm md:text-xl font-bold text-gray-600">
+                  MAX Coin
+                </span>
+
+                <div className="w-full text-2xl font-bold text-zinc-800 text-right">
+                  {
+                    Number(MKRWBalance)
+                      .toFixed(0)
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                  }
+                </div>
+                <div className="w-32 text-sm text-gray-800 font-bold text-right">
+                  MKRW
+                </div>
+                <button
+                  onClick={() => {
+                    router.push(
+                      "/" + params.lang + "/" + params.chain + "/sell-mkrw"
+                    );
+                  }}
+                  className="w-10 h-10"
+                >
+                  <Image
+                    src="/goto-icon.webp"
+                    alt="Send"
+                    width={20}
+                    height={20}
+                  />
+                </button>
+              </div>
+
+
+
+
+
 
 
             </div>
@@ -1409,7 +1413,7 @@ function IndexPage(
                   p-2
               ">
                   <div className="text-sm md:text-lg text-white">
-                      포인트 구매
+                      MAX Coin 구매
                   </div>
               </div>
 
@@ -1518,6 +1522,7 @@ function IndexPage(
 
         {/* 테더 구매 */}
         {/* route paymater */}
+        {/*
         {address && (
           <div className="mt-5 w-full flex flex-col gap-0 items-center justify-between">
               <div className="w-full flex flex-row gap-2 items-center justify-start
@@ -1593,7 +1598,7 @@ function IndexPage(
               </div>
           </div>
         )}
-
+        */}
 
 
 
