@@ -149,7 +149,7 @@ const wallets = [
 ];
 
 
-const contractAddress = "0xAa18146F88DE0381b9CC1cA6E5357f364c4ea0BB"; // MKC on bsc
+const contractAddress = "0xAa18146F88DE0381b9CC1cA6E5357f364c4ea0BB"; // MKC on polygon
 
 
 const contractAddressArbitrum = "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"; // MKC on Arbitrum
@@ -159,7 +159,7 @@ const contractAddressEthereum = "0xdac17f958d2ee523a2206206994597c13d831ec7"; //
 const contractAddressBsc = "0xAa18146F88DE0381b9CC1cA6E5357f364c4ea0BB"; // MKC on BSC
 
 
-const contractAddressMKRW = "0xEb0a5ea0001Aa9f419BbaF8ceDad265A60f0B10f"; // MKRW on BSC
+const contractAddressMKRW = "0x09AdA90502FeF059DecF9988CF88b65C28E3F16e"; // MKRW on BSC
 
 
 const erc1155ContractAddress = "0x796f8867E6D474C1d63e4D7ea5f52B48E4bA83D6";
@@ -1369,7 +1369,7 @@ function IndexPage(
                 <button
                   onClick={() => {
                     router.push(
-                      "/" + params.lang + "/" + params.chain + "/sell-mkrw"
+                      "/" + params.lang + "/" + params.chain + "/send-token/?token=MKRW"
                     );
                   }}
                   className="w-10 h-10"
