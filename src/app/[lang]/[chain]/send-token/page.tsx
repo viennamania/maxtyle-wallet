@@ -449,8 +449,6 @@ export default function SendUsdt({ params }: any) {
             address: address,
           });
 
-          console.log("result", result);
-
           if (result !== undefined && result !== null) {
             if (params.chain === "bsc") {
               setBalance( Number(result) / 10 ** 18 );
