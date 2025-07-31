@@ -1346,7 +1346,7 @@ function IndexPage(
                 ">
  
                 <Image
-                  src="/logo-mpoint.png"
+                  src="/logo-mkrw.png"
                   alt="MKRW"
                   width={35}
                   height={35}
@@ -1429,7 +1429,7 @@ function IndexPage(
                       ">
                         <div className="w-1/4 flex flex-row gap-2 items-center justify-start">
                             <Image
-                                src="/logo-mpoint.png"
+                                src="/logo-mkrw.png"
                                 alt="MKRW"
                                 width={50}
                                 height={50}

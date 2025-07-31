@@ -95,7 +95,8 @@ const wallets = [
 const contractAddress = "0xAa18146F88DE0381b9CC1cA6E5357f364c4ea0BB"; // MKC on BSC
 const contractAddressArbitrum = "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"; // USDT on Arbitrum
 const contractAddressEthereum = "0xdac17f958d2ee523a2206206994597c13d831ec7"; // USDT on Ethereum
-const contractAddressBsc = "0xAa18146F88DE0381b9CC1cA6E5357f364c4ea0BB"; // USDT on BSC
+
+const contractAddressBsc = "0xAa18146F88DE0381b9CC1cA6E5357f364c4ea0BB"; // MKC on BSC
 
 const contractAddressMKRW = "0x09AdA90502FeF059DecF9988CF88b65C28E3F16e"; // MKRW on BSC
 
@@ -816,7 +817,7 @@ export default function SendUsdt({ params }: any) {
         // send KCT
         // Call the extension function to prepare the transaction
 
-        if (String(token).toLowerCase() === "usdt") {
+        if (String(token).toLowerCase() === "mkc") {
 
 
           transaction = transfer({
@@ -890,20 +891,15 @@ export default function SendUsdt({ params }: any) {
 
           //console.log(result);
 
-          if (String(token).toLowerCase() === "usdt") {
+          if (String(token).toLowerCase() === "mkc") {
             const result = await balanceOf({
               contract: contract,
               address: address,
             });
 
-            if (params.chain === "bsc") {
-              setBalance( Number(result) / 10 ** 18 );
-            } else {
-              setBalance( Number(result) / 10 ** 18 );
-            }
+            setBalance( Number(result) / 10 ** 18 );
 
           } else if (String(token).toLowerCase() === "mkrw") {
-
 
             const result = await balanceOf({
               contract: contractMKRW,
@@ -2127,32 +2123,22 @@ export default function SendUsdt({ params }: any) {
                       
                       `}
                   >
-                      {token} 출금
+                    <div className='flex flex-row gap-2 items-center justify-center'>
+                      <Image
+                        src="/loading.png"
+                        alt="send"
+                        width={24}
+                        height={24}
+                        className={`
+                          ${sending ? 'animate-spin' : ''}
+                        `}
+                      />
+                      <span className='text-lg'>
+                        {token} {`${sending ? '출금 중...' : '출금하기'}`}
+                      </span>
+                    </div>
                   </button>
 
-                  <div className="w-full flex flex-row gap-2 text-xl font-semibold">
-
-                    {/* sending rotate animation with white color*/}
-                    {sending && (
-                      <div className="
-                        w-6 h-6
-                        border-2 border-zinc-800
-                        rounded-full
-                        animate-spin
-                      ">
-                        <Image
-                          src="/loading.png"
-                          alt="loading"
-                          width={24}
-                          height={24}
-                        />
-                      </div>
-                    )}
-                    <div className="text-white">
-                      {sending ? Sending : ''}
-                    </div>
-
-                  </div>
 
                 </div>
 
