@@ -1453,7 +1453,7 @@ export default function AIPage({ params }: any) {
                                 }}
                                 connectModal={{
                                     size: "wide", 
-                                    titleIcon: "https://wallet.cryptopay.beauty/logo.png",                           
+                                    titleIcon: "https://maxtyle.vercel.app/logo.png",                           
                                     showThirdwebBranding: false,
 
                                 }}

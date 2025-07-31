@@ -1093,7 +1093,7 @@ function IndexPage(
               connectModal={{
                 size: "wide", 
                 //size: "compact",
-                titleIcon: "https://wallet.cryptopay.beauty/logo.png",                           
+                titleIcon: "https://maxtyle.vercel.app/logo.png",                           
                 showThirdwebBranding: false,
               }}
 
