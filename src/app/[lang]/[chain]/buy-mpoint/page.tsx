@@ -951,7 +951,7 @@ export default function SendUsdt({ params }: any) {
 
 
   // swap function
-  // 스왑할 수량
+  // 구매할 수량
   const [swapAmount, setSwapAmount] = useState(0);
 
   // 스왑될 수량

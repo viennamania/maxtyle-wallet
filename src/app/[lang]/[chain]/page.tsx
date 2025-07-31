@@ -160,6 +160,7 @@ const contractAddressBsc = "0xAa18146F88DE0381b9CC1cA6E5357f364c4ea0BB"; // MKC 
 
 
 const contractAddressMKRW = "0x09AdA90502FeF059DecF9988CF88b65C28E3F16e"; // MKRW on BSC
+const contractAddressMUSD = "0x13F4007D5e8822262B3F8D651F8a5cb7B4B5E753"; // MUSD on BSC
 
 
 const erc1155ContractAddress = "0x796f8867E6D474C1d63e4D7ea5f52B48E4bA83D6";
@@ -253,7 +254,14 @@ function IndexPage(
   });
 
 
-
+  const contractMUSD = getContract({
+    // the client you have created via `createThirdwebClient()`
+    client,
+    // the chain the contract is deployed on
+    chain: bsc,
+    // the contract's address
+    address: contractAddressMUSD,
+  });
 
   /*
   const contractErc1155 = getContract({
@@ -263,6 +271,20 @@ function IndexPage(
   });
   */
 
+
+
+  useEffect(() => {
+    // Dynamically load the Binance widget script
+    const script = document.createElement("script");
+    script.src = "https://public.bnbstatic.com/unpkg/growth-widget/cryptoCurrencyWidget@0.0.20.min.js";
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      // Cleanup the script when the component unmounts
+      document.body.removeChild(script);
+    };
+  }, []);
 
 
 
@@ -558,8 +580,9 @@ function IndexPage(
   console.log("userType========", userType);
 
 
-
-  const usdtRate = 1200;
+  const mkcRate = 1200;
+  const mkrwRate = 1200;
+  const musdRate = 1;
 
  
 
@@ -747,6 +770,36 @@ function IndexPage(
 
 
 
+  // MUSD balance
+  const [MUSDBalance, setMUSDBalance] = useState(0);
+  useEffect(() => {
+
+      const getMUSDBalance = async () => {
+
+        const balance = await balanceOf({
+          contract: contractMUSD,
+          address: address,
+        });
+
+        setMUSDBalance(Number(balance) / 10 ** 18);
+
+      };
+
+      address && contractMUSD && getMUSDBalance();
+
+      // timer
+      
+      const interval = setInterval(() => {
+        address && contractMUSD && getMUSDBalance();
+      }, 10000);
+
+      return () => clearInterval(interval);
+
+  } , [address, contractMUSD]);
+
+
+
+
 
   const [price, setPrice] = useState(0);
 
@@ -821,12 +874,12 @@ function IndexPage(
 
 
 
-  const [totoalUsdtBalance, setTotalUsdtBalance] = useState(0);
+  const [totalBalanceKRW, setTotalBalanceKRW] = useState(0);
   useEffect(() => {
 
-    setTotalUsdtBalance(mkcBalance);
+    setTotalBalanceKRW(mkcBalance * mkcRate + MKRWBalance * mkrwRate + MUSDBalance * musdRate);
 
-  }, [mkcBalance]);
+  }, [mkcBalance, MKRWBalance, MUSDBalance, mkcRate, mkrwRate, musdRate]);
 
 
 
@@ -961,6 +1014,27 @@ function IndexPage(
 
 
 
+
+
+          {/* USDT 가격 binance market price */}
+          <div
+            className="
+            h-20
+              w-full flex
+              binance-widget-marquee
+            flex-row items-center justify-center gap-2
+            p-2
+            "
+
+
+            data-cmc-ids="1,1027,52,5426,3408,74,20947,5994,24478,13502,35336,825"
+            data-theme="dark"
+            data-transparent="true"
+            data-locale="ko"
+            data-fiat="KRW"
+            //data-powered-by="Powered by OneClick USDT"
+            //data-disclaimer="Disclaimer"
+          ></div>
 
           
 
@@ -1257,7 +1331,7 @@ function IndexPage(
                 
                 <span className="text-2xl md:text-3xl font-semibold text-zinc-800">
                     {
-                      Number(totoalUsdtBalance * usdtRate + MKRWBalance)
+                      Number(totalBalanceKRW)
                         .toFixed(0)
                         .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                     }{' '}원
@@ -1340,7 +1414,7 @@ function IndexPage(
               </div>
 
 
-              {/* M point balance */}
+              {/* MKRW balance */}
               <div className="w-full flex flex-row gap-2 justify-between items-center p-2
                 border-b border-gray-200
                 ">
@@ -1384,7 +1458,48 @@ function IndexPage(
               </div>
 
 
+              {/* MUSD balance */}
+              <div className="w-full flex flex-row gap-2 justify-between items-center p-2
+                border-b border-gray-200
+                ">
+ 
+                <Image
+                  src="/logo-musd.png"
+                  alt="MUSD"
+                  width={35}
+                  height={35}
+                  className="rounded-full w-8 h-8 xl:w-10 xl:h-10"
+                />
+                <span className="w-36  text-sm md:text-xl font-bold text-gray-600">
+                  MAX USD
+                </span>
 
+                <div className="w-full text-2xl font-bold text-zinc-800 text-right">
+                  {
+                    Number(MUSDBalance)
+                      .toFixed(2)
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                  }
+                </div>
+                <div className="w-32 text-sm text-gray-800 font-bold text-right">
+                  MUSD
+                </div>
+                <button
+                  onClick={() => {
+                    router.push(
+                      "/" + params.lang + "/" + params.chain + "/send-token/?token=MUSD"
+                    );
+                  }}
+                  className="w-10 h-10"
+                >
+                  <Image
+                    src="/goto-icon.webp"
+                    alt="Send"
+                    width={20}
+                    height={20}
+                  />
+                </button>
+              </div>
 
 
 
@@ -1402,7 +1517,6 @@ function IndexPage(
 
 
 
-        {address && (
 
 
           <div className="mt-5 w-full flex flex-col gap-0 items-center justify-between">
@@ -1424,7 +1538,6 @@ function IndexPage(
                       bg-white p-0
                   ">
 
-                      {/* 1 MKC = 1340 MKRW */}
                       <div className="w-full flex flex-row gap-2 items-center justify-between p-5
                       ">
                         <div className="w-1/4 flex flex-row gap-2 items-center justify-start">
@@ -1444,7 +1557,7 @@ function IndexPage(
                               현재 환율
                             </div>
                             <div className="w-full text-sm text-zinc-800 font-bold text-right">
-                              1 MKC = { usdtRate } MKRW
+                              1 MKC = { mkrwRate } MKRW
                             </div>
                           </div>
 
@@ -1517,7 +1630,117 @@ function IndexPage(
           </div>
 
 
-        )}
+
+          <div className="mt-5 w-full flex flex-col gap-0 items-center justify-between">
+
+              <div className="w-full flex flex-row gap-2 items-center justify-start
+                  rounded-t-lg
+                  bg-[#3167b4]
+                  p-2
+              ">
+                  <div className="text-sm md:text-lg text-white">
+                      MAX USD 스왑
+                  </div>
+              </div>
+
+
+ 
+                  <div className="w-full flex flex-col gap-5 items-center justify-between
+                      rounded-b-lg
+                      bg-white p-0
+                  ">
+
+                      <div className="w-full flex flex-row gap-2 items-center justify-between p-5
+                      ">
+                        <div className="w-1/4 flex flex-row gap-2 items-center justify-start">
+                            <Image
+                                src="/logo-musd.png"
+                                alt="MUSD"
+                                width={50}
+                                height={50}
+                                className="rounded-lg w-10 h-10 xl:w-12 xl:h-12"
+                            />
+                        </div>
+
+                        <div className="w-3/4 flex flex-col gap-1 items-center justify-center">
+
+                          <div className="w-full flex flex-row gap-2 items-center justify-start">
+                            <div className="w-32 text-sm text-zinc-800">
+                              현재 환율
+                            </div>
+                            <div className="w-full text-sm text-zinc-800 font-bold text-right">
+                              1 MKC = { musdRate } MUSD
+                            </div>
+                          </div>
+
+                          <div className="w-full flex flex-row gap-2 items-center justify-start">
+                            <div className="w-32 text-sm text-zinc-800">
+                              최소 구매량
+                            </div>
+                            <div className="w-full text-sm text-zinc-800 font-bold text-right">
+                              1 MUSD
+                            </div>
+                          </div>
+
+                        </div>
+
+                      </div>
+
+                      <div className="w-full flex flex-row gap-2 items-center justify-between p-5
+                      ">
+                        <button
+                            onClick={() => {
+                                // redirect to nft detail page
+                                
+                                router.push(
+                                    "/" + params.lang + "/" + params.chain + "/swap-musd"
+                                );
+                                
+                              {/* 준비중입니다. */}
+                                //alert("준비중입니다.");
+                            }}
+                            className="w-full
+                              rounded-b-lg
+                              bg-gray-100
+                              p-2
+                              text-sm md:text-lg font-semibold text-zinc-800
+                              hover:bg-gray-200
+                              "
+                        >
+                          스왑하기
+                        </button>
+
+                        {/*
+                        <button
+                            onClick={() => {
+                                // redirect to nft detail page
+                                
+                                router.push(
+                                    "/" + params.lang + "/" + params.chain + "/buy-mpoint-winpay"
+                                );
+                              
+                                //alert("준비중입니다.");
+                            }}
+                            className="w-full
+                              rounded-b-lg
+                              bg-gray-100
+                              p-2
+                              text-sm md:text-lg font-semibold text-zinc-800
+                              hover:bg-gray-200
+                              "
+                        >
+                          원화로 구매하기
+                        </button>
+                        */}
+
+                      </div>
+
+
+
+                  </div>
+
+          </div>
+        
 
 
         {/* 테더 구매 */}
@@ -1558,7 +1781,7 @@ function IndexPage(
                           현재 환율
                         </div>
                         <div className="w-full text-sm text-zinc-800 font-bold text-right">
-                          1 MKC = { usdtRate } 원
+                          1 MKC = { mkrwRate } 원
                         </div>
                       </div>
 

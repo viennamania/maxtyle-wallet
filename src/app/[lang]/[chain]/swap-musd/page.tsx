@@ -106,9 +106,11 @@ const wallets = [
 const contractAddress = "0xAa18146F88DE0381b9CC1cA6E5357f364c4ea0BB"; // USDT on Polygon
 const contractAddressArbitrum = "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"; // USDT on Arbitrum
 const contractAddressEthereum = "0xdac17f958d2ee523a2206206994597c13d831ec7"; // USDT on Ethereum
-const contractAddressBsc = "0xAa18146F88DE0381b9CC1cA6E5357f364c4ea0BB"; // USDT on BSC
 
-const contractAddressMKRW = "0x09AdA90502FeF059DecF9988CF88b65C28E3F16e"; // MKRW on BSC
+const contractAddressBsc = "0xAa18146F88DE0381b9CC1cA6E5357f364c4ea0BB"; // MKC on BSC
+
+
+const contractAddressMUSD = "0x13F4007D5e8822262B3F8D651F8a5cb7B4B5E753"; // MUSD on BSC
 
 
 
@@ -273,7 +275,7 @@ export default function SendUsdt({ params }: any) {
 
   //const token = searchParams.get('token');
 
-  const token = "MKRW"; // hardcoded for now, can be changed later
+  const token = "MUSD"; // hardcoded for now, can be changed later
 
 
   const center = searchParams.get('center');
@@ -309,13 +311,13 @@ export default function SendUsdt({ params }: any) {
 
 
 
-  const contractMKRW = getContract({
+  const contractMUSD = getContract({
     // the client you have created via `createThirdwebClient()`
     client,
     // the chain the contract is deployed on
     chain: bsc,
     // the contract's address
-    address: contractAddressMKRW,
+    address: contractAddressMUSD,
   });
 
 
@@ -444,7 +446,7 @@ export default function SendUsdt({ params }: any) {
 
 
 
-  const usdtRate = 1200;
+  const musdRate = 1; // hardcoded for now, can be changed later
 
 
   const [amount, setAmount] = useState(0);
@@ -502,7 +504,7 @@ export default function SendUsdt({ params }: any) {
 
 
 
-  const [balanceMKRW, setBalanceMKRW] = useState(0);
+  const [balanceMUSD, setBalanceMUSD] = useState(0);
   useEffect(() => {
 
     // get the balance
@@ -514,19 +516,19 @@ export default function SendUsdt({ params }: any) {
 
 
           const result = await balanceOf({
-            contract : contractMKRW,
+            contract : contractMUSD,
             address: address,
           });
 
           if (result !== undefined && result !== null) {
-              setBalanceMKRW( Number(result) / 10 ** 18 );
+              setBalanceMUSD( Number(result) / 10 ** 18 );
           } else {
-            setBalanceMKRW(0);
+            setBalanceMUSD(0);
           }
 
       } catch (error) {
         console.error("Error getting balance:", error);
-        setBalanceMKRW(0);
+        setBalanceMUSD(0);
       }
 
     };
@@ -540,7 +542,7 @@ export default function SendUsdt({ params }: any) {
     return () => clearInterval(interval);
 
 
-  } , [address, params.chain, contractMKRW]);
+  } , [address, params.chain, contractMUSD]);
 
 
 
@@ -811,7 +813,7 @@ export default function SendUsdt({ params }: any) {
           transaction = transfer({
               //contract,
 
-              contract: contractMKRW,
+              contract: contractMUSD,
 
               to: recipient.walletAddress,
               amount: amount,
@@ -885,7 +887,7 @@ export default function SendUsdt({ params }: any) {
 
 
             const result = await balanceOf({
-              contract: contractMKRW,
+              contract: contractMUSD,
               address: address,
             });
 
@@ -960,7 +962,7 @@ export default function SendUsdt({ params }: any) {
 
   const [loadingSwap, setLoadingSwap] = useState(false);
 
-  const winpay = async () => {
+  const swap = async () => {
     if (loadingSwap) {
       return;
     }
@@ -985,38 +987,127 @@ export default function SendUsdt({ params }: any) {
 
     try {
 
-      // api call to winpay
-      const response = await fetch('/api/winpay/buyPoint', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          walletAddress: address,
-          amount: swapAmount,
-          toWalletAddress: address, // toWalletAddress is same as walletAddress for now
-        }),
+
+      // page.tsx:1024 error TransactionError: Error - BEP20: transfer amount exceeds allowance
+      // check allowance
+           // // ERC20: transfer amount exceeds allowance
+
+      const result = await allowance({
+          contract: contract,
+          owner: address as string,
+          spender: contractAddressMUSD,
       });
-      const data = await response.json();
-      console.log("winpay response", data);
 
-      if (data.status === 'success') {
-
-        const jwtToken = data.jwtToken;
-
-        console.log("jwtToken", jwtToken);
+      //console.log("result", result);
+      const allowanceAmount = Number(result);
+      console.log("allowanceAmount", allowanceAmount);
 
 
-        toast.success("포인트 구매 성공");
 
-        setSwapAmount(0); // reset amount
-        setSwapAmountTo(0); // reset amount to
+      if (allowanceAmount < swapAmountTo * 10 ** 18) {
+          
+          //throw new Error('USDT 토큰을 먼저 채굴 NFT 발행 계약에 승인해주세요');
+
+          // approve
+
+          const transactionApprove = approve({
+              contract: contract,
+              spender: contractAddressMUSD,
+              amount: BigInt(swapAmountTo * 10 ** 18).toString(),
+          });
+
+          
+          const transactionResultApprove = await sendAndConfirmTransaction({
+              account: activeAccount as any,
+              transaction: transactionApprove,
+          });
+
+          if (!transactionResultApprove) {
+              throw new Error('USDT 토큰을 먼저 채굴 NFT 발행 계약에 승인해주세요.');
+          }
+          
+
+          const transaction = claimTo({
+            contract: contractMUSD,
+            to: address,
+            quantity: BigInt(swapAmount).toString(),
+          });
+
+          const { transactionHash } = await sendAndConfirmTransaction({
+            transaction: transaction,
+            account: activeAccount,
+          });
+
+          console.log("transactionHash", transactionHash);
+          if (transactionHash) {
+            toast.success("구매 완료");
+            setSwapAmount(0); // reset amount
+            setSwapAmountTo(0); // reset swap amount to
+          } else {
+            toast.error("구매 실패");
+          }
+
 
 
 
       } else {
-        toast.error("포인트 구매 실패");
+        console.log("allowance is enough");
+
+
+
+        const transaction = claimTo({
+          contract: contractMUSD,
+          to: address,
+          quantity: BigInt(swapAmount).toString(),
+        });
+
+        const { transactionHash } = await sendAndConfirmTransaction({
+          transaction,
+          account: activeAccount,
+        });
+
+
+
+        console.log("transactionHash", transactionHash);
+
+        if (transactionHash) {
+
+          toast.success("구매 완료");
+
+          setSwapAmount(0); // reset amount
+          setSwapAmountTo(0); // reset swap amount to
+
+          // refresh balance
+          // get the balance of USDT and MUSD
+
+          const result = await balanceOf({
+            contract: contract,
+            address: address,
+          });
+          if (params.chain === "bsc") {
+            setBalance( Number(result) / 10 ** 18 );
+          } else {
+            setBalance( Number(result) / 10 ** 18 );
+          }
+          
+          const resultMUSD = await balanceOf({
+            contract: contractMUSD,
+            address: address,
+          });
+          setBalanceMUSD( Number(resultMUSD) / 10 ** 18 );
+
+
+        } else {
+          toast.error("구매 실패");
+        }
+
+
       }
+
+
+
+
+
 
     } catch (error) {
       
@@ -1163,7 +1254,7 @@ export default function SendUsdt({ params }: any) {
         </button>
 
         <h1 className="text-lg font-semibold text-gray-800">
-          포인트 구매
+          MAX USD 스왑
         </h1>
 
       </div>
@@ -1226,7 +1317,7 @@ export default function SendUsdt({ params }: any) {
 
 
             {/* select swap */}
-            {/* usdt -> MKRW */}
+            {/* usdt -> MUSD */}
             {/* input 스왑 수량 */}
             {
               address
@@ -1247,18 +1338,58 @@ export default function SendUsdt({ params }: any) {
                         className='rounded-full w-8 h-8 xl:w-10 xl:h-10'
                       />
                       <span className="text-lg font-semibold text-gray-800">
-                        포인트
+                        MAX USD
                       </span>
                     </div>
 
                     <div className="flex flex-row items-center justify-end  gap-2">
                       <span className="text-2xl font-semibold text-gray-800">
-                          {Number(balanceMKRW).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                          {Number(balanceMUSD).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                       </span>
-                      <span className="text-lg">MKRW</span>
+                      <span className="text-lg">MUSD</span>
                     </div>
                   </div>
 
+                  {/* swap icon */}
+                  <div className="w-full flex flex-row items-center justify-center">
+                    <Image
+                      src="/icon-swap-arrow.png"
+                      alt="swap"
+                      width={50}
+                      height={50}
+                      className={`
+                        ${loadingSwap ? 'animate-spin' : ''}
+                        w-10 h-10
+                        cursor-pointer
+                        `}
+                    />
+                  </div>
+
+
+                  <div className="w-full flex flex-row gap-2 items-center justify-between bg-white border border-gray-300 rounded-lg p-4">
+
+                    <div className='flex flex-row gap-2 items-center justify-start'>
+                      <Image
+                        src="/token-mkc-icon.png"
+                        alt="token"
+                        width={35}
+                        height={35}
+                        className='rounded-full w-8 h-8 xl:w-10 xl:h-10'
+                      />
+                      <span className="text-lg font-semibold text-gray-800">
+                        MK Coin
+                      </span>
+                    </div>
+
+                    <div className="flex flex-row items-center justify-end  gap-2">
+                      <span className="text-2xl font-semibold text-gray-800">
+
+                        {Number(balance).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+
+                      </span>
+                      <span className="text-lg">MKC</span>
+                    </div>
+                  </div>
                 
 
                   <div className='
@@ -1276,7 +1407,7 @@ export default function SendUsdt({ params }: any) {
                         text-white
 
                       ">
-                        구매할 포인트(MKRW) 수량을 입력하세요.
+                        구매할 MAX USD 수량을 입력하세요.
                       </div>
                     </div>
 
@@ -1301,14 +1432,14 @@ export default function SendUsdt({ params }: any) {
                             setSwapAmount(e.target.value as any),
 
                             setSwapAmountTo(
-                              //Number(e.target.value) / 1000 // 1 USDT = 1200 MKRW
+                              //Number(e.target.value) / 1000 // 1 USDT = 1200 MUSD
 
                               // floating point 2
                               Math.floor(
-                                (Number(e.target.value) / usdtRate) * 100
+                                (Number(e.target.value) / musdRate) * 100
                               ) / 100
 
-                             // Number(e.target.value) / usdtRate
+                             // Number(e.target.value) / musdRate
                               
                             )
 
@@ -1319,24 +1450,27 @@ export default function SendUsdt({ params }: any) {
                       </div>
 
 
-                      {/*
+                      
                       <div className='flex flex-row gap-2 items-center justify-start'>
+                        {/* dot icon */}
                         <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                         <div className="text-sm
                           text-white
                         ">
-                          1 USDT = { usdtRate } MKRW
+                          1 MKC = { musdRate } MUSD
                         </div>
                       </div>
 
 
+                      {/* 결제할 테더 수량 */}
                       <div className='w-full flex flex-col gap-5 items-start justify-between'>
                         <div className='flex flex-row gap-2 items-center justify-start'>
+                          {/* dot icon */}
                           <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                           <div className="text-sm
                             text-white
                           ">
-                            결제할 테더(USDT) 수량
+                            결제할 MK Coin(MKC) 수량
                           </div>
                         </div>
 
@@ -1350,16 +1484,14 @@ export default function SendUsdt({ params }: any) {
                           />
                           <div className="text-2xl font-semibold text-gray-200">
                             {swapAmountTo.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                            { ' USDT'}
+                            { ' MKC' }
                           </div>
                         </div>
+
                       </div>
-                      */}
         
 
                     </div>
-
-
 
                     <button
                       disabled={
@@ -1368,7 +1500,7 @@ export default function SendUsdt({ params }: any) {
                         || swapAmountTo < 1 // 최소 1 USDT 이상 스왑 가능
                       }
 
-                      onClick={winpay}
+                      onClick={swap}
 
                       className={`w-full p-2 rounded-lg text-xl font-semibold
                           ${
@@ -1398,28 +1530,26 @@ export default function SendUsdt({ params }: any) {
                             />
                           </div>
                           <div className="text-gray-800">
-                            구매 중...
+                            스왑 중...
                           </div>
                         </div>
                       ) : (
                         <div className="w-full flex flex-row items-center justify-center gap-2">
-                          구매하기
+                          스왑하기
                         </div>
                       )}
                     </button>
 
-
-
                     { swapAmountTo > balance && (
                       <div className='text-red-500 text-sm'>
-                        테더(USDT) 잔액이 부족합니다. <br />
+                        MK Coin(MKC) 잔액이 부족합니다. <br />
                         현재 잔액: {Number(balance).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} USDT
                       </div>
                     ) }
 
                     { swapAmountTo < 10 && (
                       <div className='text-red-500 text-sm'>
-                        최소 1 USDT 이상 구매 가능합니다.
+                        최소 1 MKC 이상 구매 가능합니다.
                       </div>
                     ) }
 
@@ -1546,7 +1676,7 @@ function Header(
                   className="rounded-full w-10 h-10 xl:w-14 xl:h-14"
                   />
                   <span className="text-lg xl:text-3xl text-gray-800 font-semibold">
-                  MKRW
+                  MUSD
                   </span>
               </div>
           </button>
