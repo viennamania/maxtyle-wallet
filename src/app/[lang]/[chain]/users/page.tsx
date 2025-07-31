@@ -814,7 +814,9 @@ function AgentPage(
                                     </div>
 
                                     {/* 채팅하기, 송금하기 버튼 */}
-                                    <div className="flex flex-col gap-2">
+                                    <div className="
+                                    w-40  flex-shrink-0
+                                    flex flex-col gap-2">
                                         {/*
                                         <Button
                                             onClick={() => {
@@ -837,10 +839,20 @@ function AgentPage(
                                             className="text-sm bg-[#3167b4] text-white px-4 py-2 rounded
                                             hover:bg-blue-600 transition-colors duration-200"
                                         >
-                                            MKC 송금하기
+                                            <div className="flex flex-row gap-2 items-center">
+                                                <Image
+                                                    src="/token-mkc-icon.png"
+                                                    alt="MKC Icon"
+                                                    width={16}
+                                                    height={16}
+                                                />
+                                                <span className="text-xs">
+                                                    MK Coin 송금하기
+                                                </span>
+                                            </div>
                                         </Button>
 
-                                        {/* 포인트 송금하기 버튼 */}
+                                        {/* MKRW 송금하기 버튼 */}
                                         <Button
                                             onClick={() => {
                                                 router.push(
@@ -850,7 +862,40 @@ function AgentPage(
                                             className="text-sm bg-[#3167b4] text-white px-4 py-2 rounded
                                             hover:bg-blue-600 transition-colors duration-200"
                                         >
-                                            MKRW 송금하기
+                                            <div className="flex flex-row gap-2 items-center">
+                                                <Image
+                                                    src="/token-mkrw-icon.png"
+                                                    alt="MKRW Icon"
+                                                    width={16}
+                                                    height={16}
+                                                />
+                                                <span className="text-xs">
+                                                    MAX KRW 송금하기
+                                                </span>
+                                            </div>
+                                        </Button>
+
+                                        {/* MKRW 송금하기 버튼 */}
+                                        <Button
+                                            onClick={() => {
+                                                router.push(
+                                                    "/" + params.lang + "/" + params.chain + "/sendToUserMUSD/" + user.user_id
+                                                );
+                                            }}
+                                            className="text-sm bg-[#3167b4] text-white px-4 py-2 rounded
+                                            hover:bg-blue-600 transition-colors duration-200"
+                                        >
+                                            <div className="flex flex-row gap-2 items-center">
+                                                <Image
+                                                    src="/token-musd-icon.png"
+                                                    alt="MUSD Icon"
+                                                    width={16}
+                                                    height={16}
+                                                />
+                                                <span className="text-xs">
+                                                    MAX USD 송금하기
+                                                </span>
+                                            </div>
                                         </Button>
                                     </div>
 
