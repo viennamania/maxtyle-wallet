@@ -1592,54 +1592,6 @@ function AgentPage(
                 <div className="w-full flex flex-col items-start justify-center gap-4 p-4">
 
 
-
-                    {!address && (
-
-                        <div className="w-full flex flex-col justify-center items-center gap-2 p-2">
-
-                        
-                            <ConnectButton
-                            client={client}
-                            wallets={wallets}
-                            accountAbstraction={{
-                                chain: bsc,
-                                sponsorGas: true
-                            }}
-                            
-                            theme={"light"}
-                
-                            // button color is dark skyblue convert (49, 103, 180) to hex
-                            connectButton={{
-                                style: {
-                                backgroundColor: "#3167b4", // dark skyblue
-                                // font color is gray-300
-                                color: "#f3f4f6", // gray-300
-                                padding: "10px 20px",
-                                borderRadius: "10px",
-                                fontSize: "16px",
-                                // w-full
-                                width: "100%",
-                                },
-                                label: "로그인 및 회원가입",
-                            }}
-                
-                            connectModal={{
-                                size: "wide", 
-                                //size: "compact",
-                                titleIcon: "https://maxtyle.vercel.app/logo.png",                           
-                                showThirdwebBranding: false,
-                            }}
-                
-                            locale={"ko_KR"}
-                            //locale={"en_US"}
-                            />
-                            
-                        
-
-                        </div>
-
-                    )}
-
                     {/* icon-my-page.png */}
 
                     {/* icon-invite.png */}
@@ -2431,6 +2383,64 @@ function AgentPage(
 
 
                 </div>
+
+
+
+                    {true && (
+
+                        <div className="w-full flex flex-col justify-center items-center gap-2 p-2">
+
+                            {/* 개인키 백업받기 */}
+                            <span className="text-sm text-gray-500 font-semibold">
+                                개인키 백업받기
+                                <br />
+                                <span className="text-xs text-gray-400">
+                                    개인키를 안전한 곳에 백업하세요.
+                                </span>
+                            </span>
+
+                            <ConnectButton
+                            client={client}
+                            wallets={wallets}
+                            accountAbstraction={{
+                                chain: bsc,
+                                sponsorGas: true
+                            }}
+                            
+                            theme={"light"}
+                
+                            // button color is dark skyblue convert (49, 103, 180) to hex
+                            connectButton={{
+                                style: {
+                                backgroundColor: "#3167b4", // dark skyblue
+                                // font color is gray-300
+                                color: "#f3f4f6", // gray-300
+                                padding: "10px 20px",
+                                borderRadius: "10px",
+                                fontSize: "16px",
+                                // w-full
+                                width: "100%",
+                                },
+                                label: "로그인 및 회원가입",
+                            }}
+                
+                            connectModal={{
+                                size: "wide", 
+                                //size: "compact",
+                                titleIcon: "https://maxtyle.vercel.app/logo.png",                           
+                                showThirdwebBranding: false,
+                            }}
+                
+                            locale={"ko_KR"}
+                            //locale={"en_US"}
+                            />
+                            
+                        
+
+                        </div>
+
+                    )}
+
 
             </div>
 
