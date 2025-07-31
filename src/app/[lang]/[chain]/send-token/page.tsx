@@ -1549,6 +1549,25 @@ export default function SendUsdt({ params }: any) {
             </div>
 
 
+            {/* 스캔에서 입출금 내역 보기 */}
+            {/* new window */}
+            {/* https://bscscan.com/token/0xaa18146f88de0381b9cc1ca6e5357f364c4ea0bb?a=0xaa2005877e5547b6b5d23a130457d2eab2808fea */}
+            <div className="w-full flex flex-col gap-2 items-start mt-5">
+              <button
+                onClick={() => {
+                  window.open('https://bscscan.com/token/'
+                    + (token === "MKC" ? contractAddressBsc : token === "MKRW" ? contractAddressMKRW : contractAddress)
+                    + `?a=${address}`
+                  ); // open in new tab
+                }}
+                className="w-full p-2 rounded-lg text-sm font-semibold bg-gray-300 text-gray-400
+                hover:bg-gray-400 hover:text-white transition-colors duration-200
+                "
+              >
+                입출금 내역 보기
+              </button>
+
+            </div>
 
 
             {address
