@@ -1488,13 +1488,20 @@ export default function SendUsdt({ params }: any) {
                     height={35}
                     className='rounded-full w-8 h-8 xl:w-10 xl:h-10'
                   />
-                  {token?.toLowerCase() === "mkc" ? (
+                  {token?.toLowerCase() === "mkc" && (
                     <span className="text-lg font-semibold text-gray-800">
                       MK Coin
                     </span>
-                  ) : (
+                  )}
+                  {token?.toLowerCase() === "mkrw" && (
                     <span className="text-lg font-semibold text-gray-800">
-                      포인트
+                      MAX KRW
+                    </span>
+                  )}
+
+                  {token?.toLowerCase() === "musd" && (
+                    <span className="text-lg font-semibold text-gray-800">
+                      MAX USD
                     </span>
                   )}
 
@@ -1601,7 +1608,13 @@ export default function SendUsdt({ params }: any) {
               <button
                 onClick={() => {
                   window.open('https://bscscan.com/token/'
-                    + (token === "MKC" ? contractAddressBsc : token === "MKRW" ? contractAddressMKRW : contractAddress)
+
+                    //+ (token === "MKC" ? contractAddressBsc : token === "MKRW" ? contractAddressMKRW : contractAddress)
+
+                    + (token === "MKC" ? contractAddress
+                      : token === "MKRW" ? contractAddressMKRW
+                      : token === "MUSD" ? contractAddressMUSD
+                      : contractAddress)
                     + `?a=${address}`
                   ); // open in new tab
                 }}
