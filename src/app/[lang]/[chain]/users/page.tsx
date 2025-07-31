@@ -804,7 +804,7 @@ function AgentPage(
                                             alt={user.nickname}
                                             width={50}
                                             height={50}
-                                            className="rounded-full"
+                                            className="rounded-full object-cover w-12 h-12"
                                         />
                                         <div>
                                             <h3 className="text-lg font-semibold">{user.nickname}</h3>
@@ -815,6 +815,7 @@ function AgentPage(
 
                                     {/* 채팅하기, 송금하기 버튼 */}
                                     <div className="flex flex-col gap-2">
+                                        {/*
                                         <Button
                                             onClick={() => {
                                                 
@@ -826,15 +827,17 @@ function AgentPage(
                                         >
                                             채팅하기
                                         </Button>
+                                        */}
                                         <Button
                                             onClick={() => {
                                                 router.push(
-                                                    "/" + params.lang + "/" + params.chain + "/sendToUserUSDT/" + user.user_id
+                                                    "/" + params.lang + "/" + params.chain + "/sendToUserMKC/" + user.user_id
                                                 );
                                             }}
-                                            className="text-sm bg-green-500 text-white px-4 py-2 rounded"
+                                            className="text-sm bg-[#3167b4] text-white px-4 py-2 rounded
+                                            hover:bg-blue-600 transition-colors duration-200"
                                         >
-                                            테더 송금하기
+                                            MKC 송금하기
                                         </Button>
 
                                         {/* 포인트 송금하기 버튼 */}
@@ -844,9 +847,10 @@ function AgentPage(
                                                     "/" + params.lang + "/" + params.chain + "/sendToUserMKRW/" + user.user_id
                                                 );
                                             }}
-                                            className="text-sm bg-yellow-500 text-white px-4 py-2 rounded"
+                                            className="text-sm bg-[#3167b4] text-white px-4 py-2 rounded
+                                            hover:bg-blue-600 transition-colors duration-200"
                                         >
-                                            포인트 송금하기
+                                            MKRW 송금하기
                                         </Button>
                                     </div>
 

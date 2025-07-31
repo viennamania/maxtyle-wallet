@@ -75,7 +75,7 @@ const wallets = [
 
 const contractAddress = "0xAa18146F88DE0381b9CC1cA6E5357f364c4ea0BB"; // USDT on Polygon
 
-const contractAddressKCT = "0xEb0a5ea0001Aa9f419BbaF8ceDad265A60f0B10f"; // KCT on Polygon
+const contractAddressKCT = "0x09AdA90502FeF059DecF9988CF88b65C28E3F16e"; // KCT on Polygon
 
 
 const claimWalletAddress = "0x35C482f619D3072c0fd6891E249f8BeCCB4e2FCb"; // claim wallet address

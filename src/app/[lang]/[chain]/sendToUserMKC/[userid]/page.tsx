@@ -96,7 +96,8 @@ const wallets = [
 const contractAddress = "0xAa18146F88DE0381b9CC1cA6E5357f364c4ea0BB"; // USDT on Polygon
 const contractAddressArbitrum = "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"; // USDT on Arbitrum
 const contractAddressEthereum = "0xdac17f958d2ee523a2206206994597c13d831ec7"; // USDT on Ethereum
-const contractAddressBsc = "0xAa18146F88DE0381b9CC1cA6E5357f364c4ea0BB"; // USDT on BSC
+
+const contractAddressBsc = "0xAa18146F88DE0381b9CC1cA6E5357f364c4ea0BB"; // MKC on BSC
 
 const contractAddressMKRW = "0x09AdA90502FeF059DecF9988CF88b65C28E3F16e"; // MKRW on BSC
 
@@ -259,7 +260,7 @@ export default function SendUsdt({ params }: any) {
   const searchParams = useSearchParams();
  
 
-  const token = "USDT"; 
+  const token = "MKC"; // searchParams.get("token") || "USDT";
 
   //console.log("token", token);
 
@@ -442,7 +443,7 @@ export default function SendUsdt({ params }: any) {
       if (!address || !params.chain || !token) return;
   
       try {
-        if (String(token).toLowerCase() === "usdt") {
+        if (String(token).toLowerCase() === "mkc" || String(token).toLowerCase() === "usdt") {
 
           const result = await balanceOf({
             contract : contract,
@@ -450,11 +451,7 @@ export default function SendUsdt({ params }: any) {
           });
 
           if (result !== undefined && result !== null) {
-            if (params.chain === "bsc") {
               setBalance( Number(result) / 10 ** 18 );
-            } else {
-              setBalance( Number(result) / 10 ** 18 );
-            }
           } else {
             setBalance(0);
           }
@@ -562,7 +559,7 @@ export default function SendUsdt({ params }: any) {
         // send KCT
         // Call the extension function to prepare the transaction
 
-        if (String(token).toLowerCase() === "usdt") {
+        if (String(token).toLowerCase() === "mkc") {
 
 
           transaction = transfer({
@@ -924,7 +921,7 @@ export default function SendUsdt({ params }: any) {
                     </span>
                   ) : (
                     <span className="text-lg font-semibold text-gray-800">
-                      포인트
+                      MK Coin
                     </span>
                   )}
 
@@ -1052,6 +1049,20 @@ export default function SendUsdt({ params }: any) {
                     </div>
                   )}
 
+                  {/* information 회원 지갑주소를 확인해주세요. */}
+                  <div className='w-full flex flex-row gap-2 items-center justify-start'>
+                    <Image
+                      src="/icon-info.png"
+                      alt="info"
+                      width={20}
+                      height={20}
+                      className='rounded-full w-6 h-6'
+                    />
+                    <div className="text-sm text-gray-800">
+                      {sendbirdUser ? "회원 지갑주소를 확인해주세요." : "회원의 지갑주소를 스캔해주세요."}
+                    </div>
+                  </div>
+
 
 
                   <div className='flex flex-row gap-2 items-center justify-start'>
@@ -1060,7 +1071,7 @@ export default function SendUsdt({ params }: any) {
                     <div className="text-sm
                       text-gray-800
                     ">
-                      보낼 금액을 입력해주세요
+                      보낼 수량을 입력해주세요
                     </div>
                   </div>
 

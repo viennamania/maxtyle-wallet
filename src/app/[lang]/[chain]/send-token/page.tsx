@@ -2130,7 +2130,7 @@ export default function SendUsdt({ params }: any) {
                         width={24}
                         height={24}
                         className={`
-                          ${sending ? 'animate-spin' : ''}
+                          ${sending ? 'animate-spin' : 'hidden'}
                         `}
                       />
                       <span className='text-lg'>
