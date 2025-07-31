@@ -1413,94 +1413,116 @@ function IndexPage(
                 </button>
               </div>
 
-
-              {/* MKRW balance */}
-              <div className="w-full flex flex-row gap-2 justify-between items-center p-2
-                border-b border-gray-200
+              {/* 스테이블 코인 */}
+              <div className="w-full flex flex-col gap-2 items-center justify-start
+                bg-white p-2 rounded-b-lg
+                border border-gray-200
                 ">
- 
-                <Image
-                  src="/logo-mkrw.png"
-                  alt="MKRW"
-                  width={35}
-                  height={35}
-                  className="rounded-full w-8 h-8 xl:w-10 xl:h-10"
-                />
-                <span className="w-36  text-sm md:text-xl font-bold text-gray-600">
-                  MAX KRW
-                </span>
 
-                <div className="w-full text-2xl font-bold text-zinc-800 text-right">
-                  {
-                    Number(MKRWBalance)
-                      .toFixed(2)
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                  }
-                </div>
-                <div className="w-32 text-sm text-gray-800 font-bold text-right">
-                  MKRW
-                </div>
-                <button
-                  onClick={() => {
-                    router.push(
-                      "/" + params.lang + "/" + params.chain + "/send-token/?token=MKRW"
-                    );
-                  }}
-                  className="w-10 h-10"
-                >
-                  <Image
-                    src="/goto-icon.webp"
-                    alt="Send"
-                    width={20}
-                    height={20}
-                  />
-                </button>
-              </div>
-
-
-              {/* MUSD balance */}
-              <div className="w-full flex flex-row gap-2 justify-between items-center p-2
-                border-b border-gray-200
+                <div className="flex flex-row gap-2 items-center
+                  bg-gray-100 p-2 rounded-lg
+                  w-full
+                  justify-start
                 ">
- 
-                <Image
-                  src="/logo-musd.png"
-                  alt="MUSD"
-                  width={35}
-                  height={35}
-                  className="rounded-full w-8 h-8 xl:w-10 xl:h-10"
-                />
-                <span className="w-36  text-sm md:text-xl font-bold text-gray-600">
-                  MAX USD
-                </span>
-
-                <div className="w-full text-2xl font-bold text-zinc-800 text-right">
-                  {
-                    Number(MUSDBalance)
-                      .toFixed(2)
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                  }
-                </div>
-                <div className="w-32 text-sm text-gray-800 font-bold text-right">
-                  MUSD
-                </div>
-                <button
-                  onClick={() => {
-                    router.push(
-                      "/" + params.lang + "/" + params.chain + "/send-token/?token=MUSD"
-                    );
-                  }}
-                  className="w-10 h-10"
-                >
                   <Image
-                    src="/goto-icon.webp"
-                    alt="Send"
-                    width={20}
-                    height={20}
+                    src="/icon-stablecoin.webp"
+                    alt="Stablecoin"
+                    width={35}
+                    height={35}
+                    className="rounded-lg w-8 h-8 xl:w-10 xl:h-10"
                   />
-                </button>
-              </div>
+                  <span className="w-36 text-sm md:text-xl font-bold text-gray-600">
+                    스테이블 코인
+                  </span>
+                </div>
 
+                {/* MKRW balance */}
+                <div className="w-full flex flex-row gap-2 justify-between items-center p-2
+                  border-b border-gray-200
+                  ">
+  
+                  <Image
+                    src="/logo-mkrw.png"
+                    alt="MKRW"
+                    width={35}
+                    height={35}
+                    className="rounded-full w-8 h-8 xl:w-10 xl:h-10"
+                  />
+                  <span className="w-36  text-sm md:text-xl font-bold text-gray-600">
+                    MAX KRW
+                  </span>
+
+                  <div className="w-full text-2xl font-bold text-zinc-800 text-right">
+                    {
+                      Number(MKRWBalance)
+                        .toFixed(2)
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                    }
+                  </div>
+                  <div className="w-32 text-sm text-gray-800 font-bold text-right">
+                    MKRW
+                  </div>
+                  <button
+                    onClick={() => {
+                      router.push(
+                        "/" + params.lang + "/" + params.chain + "/send-token/?token=MKRW"
+                      );
+                    }}
+                    className="w-10 h-10"
+                  >
+                    <Image
+                      src="/goto-icon.webp"
+                      alt="Send"
+                      width={20}
+                      height={20}
+                    />
+                  </button>
+                </div>
+
+
+                {/* MUSD balance */}
+                <div className="w-full flex flex-row gap-2 justify-between items-center p-2
+                  ">
+  
+                  <Image
+                    src="/logo-musd.png"
+                    alt="MUSD"
+                    width={35}
+                    height={35}
+                    className="rounded-full w-8 h-8 xl:w-10 xl:h-10"
+                  />
+                  <span className="w-36  text-sm md:text-xl font-bold text-gray-600">
+                    MAX USD
+                  </span>
+
+                  <div className="w-full text-2xl font-bold text-zinc-800 text-right">
+                    {
+                      Number(MUSDBalance)
+                        .toFixed(2)
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                    }
+                  </div>
+                  <div className="w-32 text-sm text-gray-800 font-bold text-right">
+                    MUSD
+                  </div>
+                  <button
+                    onClick={() => {
+                      router.push(
+                        "/" + params.lang + "/" + params.chain + "/send-token/?token=MUSD"
+                      );
+                    }}
+                    className="w-10 h-10"
+                  >
+                    <Image
+                      src="/goto-icon.webp"
+                      alt="Send"
+                      width={20}
+                      height={20}
+                    />
+                  </button>
+                </div>
+
+              </div>
 
 
 

@@ -99,6 +99,8 @@ const contractAddressEthereum = "0xdac17f958d2ee523a2206206994597c13d831ec7"; //
 const contractAddressBsc = "0xAa18146F88DE0381b9CC1cA6E5357f364c4ea0BB"; // MKC on BSC
 
 const contractAddressMKRW = "0x09AdA90502FeF059DecF9988CF88b65C28E3F16e"; // MKRW on BSC
+const contractAddressMUSD = "0x13F4007D5e8822262B3F8D651F8a5cb7B4B5E753"; // MUSD on BSC
+
 
 
 
@@ -302,6 +304,15 @@ export default function SendUsdt({ params }: any) {
     address: contractAddressMKRW,
   });
 
+  const contractMUSD = getContract({
+    // the client you have created via `createThirdwebClient()`
+    client,
+    // the chain the contract is deployed on
+    chain: bsc,
+    // the contract's address
+    address: contractAddressMUSD,
+  });
+
 
 
   
@@ -474,7 +485,23 @@ export default function SendUsdt({ params }: any) {
           } else {
             setBalance(0);
           }
+        } else if (String(token).toLowerCase() === "musd") {
+
+          const result = await balanceOf({
+            contract : contractMUSD,
+            address: address,
+          });
+
+          if (result !== undefined && result !== null) {
+            setBalance( Number(result) / 10 ** 18 );
+          } else {
+            setBalance(0);
+          }
+
         }
+
+
+
       } catch (error) {
         console.error("Error getting balance:", error);
         setBalance(0);
@@ -491,7 +518,7 @@ export default function SendUsdt({ params }: any) {
     return () => clearInterval(interval);
 
 
-  } , [address, params.chain, token, contract, contractMKRW]);
+  } , [address, params.chain, token, contract, contractMKRW, contractMUSD]);
 
 
 
@@ -838,7 +865,16 @@ export default function SendUsdt({ params }: any) {
               to: recipient.walletAddress,
               amount: amount,
           });
-        } 
+        } else if (String(token).toLowerCase() === "musd") {
+          transaction = transfer({
+              //contract,
+
+              contract: contractMUSD,
+
+              to: recipient.walletAddress,
+              amount: amount,
+          });
+        }
 
         if (!transaction) {
           toast.error("잘못된 토큰입니다.");
@@ -907,6 +943,15 @@ export default function SendUsdt({ params }: any) {
             });
 
             setBalance( Number(result) / 10 ** 18 );
+          } else if (String(token).toLowerCase() === "musd") {
+
+            const result = await balanceOf({
+              contract: contractMUSD,
+              address: address,
+            });
+
+            setBalance( Number(result) / 10 ** 18 );
+
           }
 
         } else {
