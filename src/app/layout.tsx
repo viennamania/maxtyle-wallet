@@ -97,8 +97,8 @@ export default function RootLayout({
 
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>MKRW</title>
-        <meta name="description" content="MKRW는 MKRW를 모으고, 교환하고, 거래하는 플랫폼입니다." />
+        <title>MAXTYLE Wallet</title>
+        <meta name="description" content="MAXTYLE은 MKRW를 모으고, 교환하고, 거래하는 플랫폼입니다." />
         <link rel="icon" href="/favicon.ico" />
 
 
