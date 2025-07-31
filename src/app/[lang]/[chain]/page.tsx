@@ -1353,7 +1353,7 @@ function IndexPage(
                   className="rounded-full w-8 h-8 xl:w-10 xl:h-10"
                 />
                 <span className="w-36  text-sm md:text-xl font-bold text-gray-600">
-                  MAX Coin
+                  MAX KRW
                 </span>
 
                 <div className="w-full text-2xl font-bold text-zinc-800 text-right">
@@ -1413,7 +1413,7 @@ function IndexPage(
                   p-2
               ">
                   <div className="text-sm md:text-lg text-white">
-                      MAX Coin 구매
+                      MAX KRW 스왑
                   </div>
               </div>
 
@@ -1468,7 +1468,7 @@ function IndexPage(
                                 // redirect to nft detail page
                                 
                                 router.push(
-                                    "/" + params.lang + "/" + params.chain + "/buy-mpoint"
+                                    "/" + params.lang + "/" + params.chain + "/swap-mkrw"
                                 );
                                 
                               {/* 준비중입니다. */}
@@ -1482,10 +1482,10 @@ function IndexPage(
                               hover:bg-gray-200
                               "
                         >
-                          MKC로 구매하기
+                          스왑하기
                         </button>
 
-
+                        {/*
                         <button
                             onClick={() => {
                                 // redirect to nft detail page
@@ -1493,8 +1493,7 @@ function IndexPage(
                                 router.push(
                                     "/" + params.lang + "/" + params.chain + "/buy-mpoint-winpay"
                                 );
-                                
-                              {/* 준비중입니다. */}
+                              
                                 //alert("준비중입니다.");
                             }}
                             className="w-full
@@ -1507,6 +1506,7 @@ function IndexPage(
                         >
                           원화로 구매하기
                         </button>
+                        */}
 
                       </div>
 
