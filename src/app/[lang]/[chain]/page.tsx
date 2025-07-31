@@ -1359,7 +1359,7 @@ function IndexPage(
                 <div className="w-full text-2xl font-bold text-zinc-800 text-right">
                   {
                     Number(MKRWBalance)
-                      .toFixed(0)
+                      .toFixed(2)
                       .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                   }
                 </div>

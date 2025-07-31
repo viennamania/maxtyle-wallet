@@ -972,7 +972,7 @@ export default function SendUsdt({ params }: any) {
                     </span>
                   ) : (
                     <span className="text-lg font-semibold text-gray-800">
-                      포인트
+                      MAX KRW
                     </span>
                   )}
 
@@ -1100,6 +1100,19 @@ export default function SendUsdt({ params }: any) {
                     </div>
                   )}
 
+                  {/* information 회원 지갑주소를 확인해주세요. */}
+                  <div className='w-full flex flex-row gap-2 items-center justify-start'>
+                    <Image
+                      src="/icon-info.png"
+                      alt="info"
+                      width={20}
+                      height={20}
+                      className='rounded-full w-6 h-6'
+                    />
+                    <div className="text-sm text-gray-800">
+                      {sendbirdUser ? "회원 지갑주소를 확인해주세요." : "회원의 지갑주소를 스캔해주세요."}
+                    </div>
+                  </div>
 
 
                   <div className='flex flex-row gap-2 items-center justify-start'>
@@ -1108,7 +1121,7 @@ export default function SendUsdt({ params }: any) {
                     <div className="text-sm
                       text-gray-800
                     ">
-                      보낼 금액을 입력해주세요
+                      보낼 수량을 입력해주세요
                     </div>
                   </div>
 
