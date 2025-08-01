@@ -1039,7 +1039,41 @@ function IndexPage(
           
 
         </div>
-        
+
+
+        {/* [알림] 지갑서비스를 오픈하였습니다. */}
+        {/* horizontal line scrolling announcement */}
+        <div className="w-full flex flex-col bg-gray-100 p-5 rounded-lg text-start gap-2 mt-5">
+          
+          <div className="flex flex-row justify-between items-center">
+            
+            <div className="flex flex-row justify-start items-center gap-2">
+              <Image
+                  src="/icon-notice.webp"
+                  alt="Notice"
+                  width={40}
+                  height={40}
+                  className="rounded-full w-8 h-8 mr-2"
+              />
+              <span className="text-sm text-zinc-800">
+                [공지] 지갑서비스를 오픈하였습니다.
+              </span>
+            </div>
+            <button
+              onClick={() => {
+                router.push(
+                  "/" + params.lang + "/" + params.chain + "/notice"
+                );
+              }}
+              className="text-sm border-b-2 border-blue-500 text-blue-500 hover:bg-blue-100 px-2 rounded"
+            >
+              자세히 보기
+            </button>
+
+          </div>
+
+        </div>
+
 
         <div className="w-full flex flex-col justify-between items-center gap-2 mb-5">
           {/*
