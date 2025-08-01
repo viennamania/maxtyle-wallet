@@ -580,9 +580,9 @@ function IndexPage(
   console.log("userType========", userType);
 
 
-  const mkcRate = 1200;
-  const mkrwRate = 1200;
-  const musdRate = 1;
+  const mkcRate = 120;
+  const mkrwRate = 120;
+  const musdRate = 0.1;
 
  
 
