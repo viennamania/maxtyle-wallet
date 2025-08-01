@@ -446,7 +446,7 @@ export default function SendUsdt({ params }: any) {
 
 
 
-  const musdRate = 1; // hardcoded for now, can be changed later
+  const musdRate = 0.1; // hardcoded for now, can be changed later
 
 
   const [amount, setAmount] = useState(0);

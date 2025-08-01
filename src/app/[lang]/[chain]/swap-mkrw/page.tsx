@@ -445,7 +445,7 @@ export default function SendUsdt({ params }: any) {
 
 
 
-  const usdtRate = 1200;
+  const mkrwRate = 120;
 
 
   const [amount, setAmount] = useState(0);
@@ -1435,10 +1435,10 @@ export default function SendUsdt({ params }: any) {
 
                               // floating point 2
                               Math.floor(
-                                (Number(e.target.value) / usdtRate) * 100
+                                (Number(e.target.value) / mkrwRate) * 100
                               ) / 100
 
-                             // Number(e.target.value) / usdtRate
+                             // Number(e.target.value) / mkrwRate
                               
                             )
 
@@ -1456,7 +1456,7 @@ export default function SendUsdt({ params }: any) {
                         <div className="text-sm
                           text-white
                         ">
-                          1 MKC = { usdtRate } MKRW
+                          1 MKC = { mkrwRate } MKRW
                         </div>
                       </div>
 
