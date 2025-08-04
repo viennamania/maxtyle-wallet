@@ -728,7 +728,7 @@ function AgentPage(
 
 
                {/* list of sendbird users */}
-                <div className="w-full mb-5">
+                <div className="w-full mb-5 hidden">
                     
                     {/* icon-invite.png */}
                     <div className="flex items-center gap-2 mb-4
