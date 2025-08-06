@@ -806,6 +806,41 @@ function AgentPage(
 
 
 
+                {/* 메뉴: 공지사항, 회원목록 */}
+                <div className="w-full flex flex-row gap-4 items-start justify-start mb-5">
+                    <div className="flex flex-row gap-2 items-center
+                        border-b-2 border-blue-500 pb-2">
+                        <Image
+                            src="/icon-notice.png"
+                            alt="Notice Icon"
+                            width={24}
+                            height={24}
+                        />
+                        <Link
+                            href={`/${lang}/${chain}/admin-notice`}
+                            className="text-lg font-semibold text-gray-800 hover:text-blue-600"
+                        >
+                            공지사항
+                        </Link>
+                    </div>
+
+                    <div className="flex flex-row gap-2 items-center
+                        border-b-2 border-blue-500 pb-2">
+                        <Image
+                            src="/icon-invite.png"
+                            alt="Users Icon"
+                            width={24}
+                            height={24}
+                        />
+                        <Link
+                            href={`/${lang}/${chain}/admin-users`}
+                            className="text-lg font-semibold text-gray-800 hover:text-blue-600"
+                        >
+                            회원 목록
+                        </Link>
+                    </div>
+                </div>
+
 
                {/* list of sendbird users */}
                {/*
