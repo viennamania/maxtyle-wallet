@@ -2,7 +2,7 @@
 
 
 /*
-Error: Invalid src prop (/logo-mkc.png.png) on `next/image`, hostname "cryptologos.cc" is not configured under images in your `next.config.js`
+Error: Invalid src prop (/token-mkc-icon.png.png) on `next/image`, hostname "cryptologos.cc" is not configured under images in your `next.config.js`
 */
 
 const nextConfig = {

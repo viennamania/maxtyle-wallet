@@ -1398,7 +1398,7 @@ function IndexPage(
               <div className="w-full flex flex-row gap-2 justify-between items-center p-2
                 ">
                 <Image
-                  src="/logo-mkc.png"
+                  src="/token-mkc-icon.png"
                   alt="MKC"
                   width={35}
                   height={35}
@@ -1813,7 +1813,7 @@ function IndexPage(
                   ">
                     <div className="w-1/4 flex flex-row gap-2 items-center justify-start">
                         <Image
-                            src="/logo-mkc.png"
+                            src="/token-mkc-icon.png"
                             alt="MKC"
                             width={50}
                             height={50}
