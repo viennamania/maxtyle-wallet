@@ -515,6 +515,14 @@ function AgentPage(
     };
     useEffect(() => {
         getUsers();
+
+        // interval to refresh users every 10 seconds
+        const interval = setInterval(() => {
+            getUsers();
+        }, 10000);
+
+        return () => clearInterval(interval);
+        
     }, [searchNickname]);
 
     /*
