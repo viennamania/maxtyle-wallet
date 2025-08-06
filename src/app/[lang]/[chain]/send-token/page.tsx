@@ -1769,7 +1769,7 @@ export default function SendUsdt({ params }: any) {
 
                   <div className="w-full flex flex-col items-center justify-center gap-2 p-4 bg-red-100 border border-red-300 rounded-lg">
                     <div className="text-red-600 font-semibold text-lg">
-                      당신의 계정은 차단되었습니다.
+                      당신의 계정은 출금을 할수 없습니다.
                     </div>
                     <div className="text-red-500 text-sm">
                       고객 지원팀에 문의하여 자세한 정보를 확인하세요.
