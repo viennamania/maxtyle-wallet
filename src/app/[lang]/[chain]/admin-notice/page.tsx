@@ -150,8 +150,10 @@ function AgentPage(
 
   return (
 
-    <main className="p-4 pb-10 min-h-[100vh] flex items-start justify-start mx-auto">
-
+    <main className="
+        p-4 min-h-[100vh] flex-col items-start justify-center container max-w-screen-2xl mx-auto
+        bg-[#E7EDF1]
+        ">
 
       <div className="w-full flex flex-col items-center justify-center gap-4">
 
