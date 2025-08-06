@@ -1437,10 +1437,6 @@ function AgentPage(
                                                 )}
                                             </div>
 
-
-
-
-
                                         </td>
                                     </tr>
                                 ))}
