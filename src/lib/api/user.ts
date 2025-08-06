@@ -69,6 +69,10 @@ export interface UserProps {
     status: string,
   },
 
+  mkcBalance: number,
+  mkrwBalance: number,
+  musdBalance: number,
+  usdtBalance: number,
 
 }
 
@@ -738,6 +742,11 @@ export async function getAllUsers(
       mobile: user?.mobile,
       email: user?.email,
       start: user?.start,
+
+      mkcBalance: user?.mkcBalance,
+      mkrwBalance: user?.mkrwBalance,
+      musdBalance: user?.musdBalance,
+      usdtBalance: user?.usdtBalance,
     };
   } );
 
