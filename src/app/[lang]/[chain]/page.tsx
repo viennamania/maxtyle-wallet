@@ -1050,7 +1050,7 @@ function IndexPage(
             
             <div className="flex flex-row justify-start items-center gap-2">
               <Image
-                  src="/icon-notice.webp"
+                  src="/icon-notice.png"
                   alt="Notice"
                   width={40}
                   height={40}
