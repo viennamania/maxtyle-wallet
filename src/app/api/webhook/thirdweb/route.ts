@@ -376,8 +376,22 @@ export async function POST(request: NextRequest) {
 
 
 
+
+
+  
+
+  const balanceMKCTo = await balanceOf({
+    contract: contractMKC,
+    address: toAddress,
+  });
+
   const balanceMKRWTo = await balanceOf({
     contract: contractMKRW,
+    address: toAddress,
+  });
+
+  const balanceMUSDTo = await balanceOf({
+    contract: contractMUSD,
     address: toAddress,
   });
 
@@ -386,13 +400,14 @@ export async function POST(request: NextRequest) {
     address: toAddress,
   });
 
+
   // update user collection with MKRW, USDT balance for toAddress
   await upsertOneByWalletAddress({
     walletAddress: toAddress,
     nickname: toUser.nickname,
-    mkcBalance: Number(balanceMKCFrom) / 10 ** 18, // assuming MKC has 18 decimals
-    mkrwBalance: Number(balanceMKRWTo) / 10 ** 18,
-    musdBalance: Number(balanceMUSDFrom) / 10 ** 18, // assuming MUSD has 18 decimals
+    mkcBalance: Number(balanceMKCTo) / 10 ** 18, // assuming MKC has 18 decimals
+    mkrwBalance: Number(balanceMKRWTo) / 10 ** 18, // assuming MKRW has 18 decimals
+    musdBalance: Number(balanceMUSDTo) / 10 ** 18, // assuming MUSD has 18 decimals
     usdtBalance: Number(balanceUSDTTo) / 10 ** 18, // assuming USDT has 18 decimals
   });
 
