@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState, Suspense } from "react";
+import React, { useEffect, useState, Suspense, use } from "react";
 
 import { toast } from 'react-toastify';
 
@@ -728,6 +728,73 @@ function AgentPage(
 
 
 
+    // user isBlocked update status function
+
+    // updating user block status array
+    // array of objects with userId and isBlocked properties
+    const [loadingUpdateUserBlockStatus, setLoadingUpdateUserBlockStatus] = useState(
+        [] as { userId: string; isBlocked: boolean }[]
+    );
+   
+    
+
+    const updateUserBlockStatus = async (userId: string, isBlocked: boolean) => {
+        try {
+
+            if (loadingUpdateUserBlockStatus.some((item) => item.userId === userId)) {
+                return; // already updating this user
+            }
+
+            setLoadingUpdateUserBlockStatus((prev) => [
+                ...prev,
+                { userId, isBlocked },
+            ]);
+
+            const response = await fetch("/api/user/updateUserBlockStatus", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    walletAddress: userId,
+                    isBlocked: isBlocked,
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to update user block status');
+            }
+
+            const data = await response.json();
+
+            console.log("updateUserBlockStatus data", data);
+
+            if (data.result) {
+                // refresh users
+                getUsers();
+                toast.success('회원 상태가 업데이트 되었습니다.');
+            } else {
+                toast.error('회원 상태 업데이트에 실패했습니다.');
+            }
+
+        } catch (error) {
+            console.error("updateUserBlockStatus error", error);
+            toast.error('회원 상태 업데이트에 실패했습니다: ' + String(error));
+        }
+
+        finally {
+            setLoadingUpdateUserBlockStatus((prev) =>
+                prev.filter((item) => item.userId !== userId)
+            );
+        }
+
+    }
+
+
+
+
+
+
     return (
 
         <main className="
@@ -1181,13 +1248,17 @@ function AgentPage(
                                                         </span>
                                                         {/* 포인트 출금 차단 해제 버튼 */}
                                                         <Button
+                                                            disabled={loadingUpdateUserBlockStatus.some((item) => item.userId === user.walletAddress)}
                                                             onClick={() => {
                                                                 // 포인트 출금 차단 해제 기능은 현재 준비중입니다.
-                                                                alert('준비중입니다.');
+                                                                //alert('준비중입니다.');
+                                                                // call function to unblock user
+                                                                updateUserBlockStatus(user.walletAddress, false);
                                                             }}
-                                                            className="text-sm bg-red-500 text-white px-4 py-2 rounded"
+                                                            className={`text-sm bg-red-500 text-white px-4 py-2 rounded
+                                                                ${loadingUpdateUserBlockStatus.some((item) => item.userId === user.walletAddress) ? 'opacity-50 cursor-not-allowed' : ''}`}
                                                         >
-                                                            출금 차단 해제
+                                                            {loadingUpdateUserBlockStatus.some((item) => item.userId === user.walletAddress) ? '처리중...' : '출금 차단 해제'}
                                                         </Button>
                                                     </div>
                                                 ) : (
@@ -1198,13 +1269,17 @@ function AgentPage(
                                                         </span>
                                                         {/* 포인트 출금 차단 버튼 */}
                                                         <Button
+                                                            disabled={loadingUpdateUserBlockStatus.some((item) => item.userId === user.walletAddress)}
                                                             onClick={() => {
                                                                 // 포인트 출금 차단 기능은 현재 준비중입니다.
-                                                                alert('준비중입니다.');
+                                                                //alert('준비중입니다.');
+                                                                // call function to block user
+                                                                updateUserBlockStatus(user.walletAddress, true);
                                                             }}
-                                                            className="text-sm bg-gray-500 text-white px-4 py-2 rounded"
+                                                            className={`text-sm bg-gray-500 text-white px-4 py-2 rounded
+                                                                ${loadingUpdateUserBlockStatus.some((item) => item.userId === user.walletAddress) ? 'opacity-50 cursor-not-allowed' : ''}`}
                                                         >
-                                                            출금 차단
+                                                            {loadingUpdateUserBlockStatus.some((item) => item.userId === user.walletAddress) ? '처리중...' : '출금 차단'}
                                                         </Button>
                                                     </div>
                                                 )}

@@ -74,6 +74,8 @@ export interface UserProps {
   musdBalance: number,
   usdtBalance: number,
 
+  isBlocked: boolean,
+
 }
 
 export interface ResultProps {
@@ -747,6 +749,8 @@ export async function getAllUsers(
       mkrwBalance: user?.mkrwBalance,
       musdBalance: user?.musdBalance,
       usdtBalance: user?.usdtBalance,
+
+      isBlocked: user?.isBlocked,
     };
   } );
 
@@ -1638,6 +1642,42 @@ export async function upsertOneByWalletAddress(data: any) {
       ...data,
       createdAt: new Date().toISOString(),
     };
+  } else {
+    return null;
+  }
+
+}
+
+
+
+// updateOneBlockStatus
+export async function updateOneBlockStatus({
+  walletAddress,
+  isBlocked,
+}: {
+  walletAddress: string;
+  isBlocked: boolean;
+}): Promise<UserProps | null> {
+
+  const client = await clientPromise;
+  const collection = client.db('damoa').collection('users');
+
+  // update and return updated user
+  if (!walletAddress) {
+    return null;
+  }
+
+  const result = await collection.updateOne(
+    { walletAddress: walletAddress },
+    { $set: { isBlocked: isBlocked } }
+  );
+
+  if (result) {
+    const updated = await collection.findOne<UserProps>(
+      { walletAddress: walletAddress },
+    );
+
+    return updated;
   } else {
     return null;
   }
