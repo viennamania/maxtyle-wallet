@@ -731,7 +731,7 @@ function AgentPage(
     return (
 
         <main className="
-        p-4 min-h-[100vh] flex-col items-start justify-center container max-w-screen-xl mx-auto
+        p-4 min-h-[100vh] flex-col items-start justify-center container max-w-screen-2xl mx-auto
         bg-[#E7EDF1]
         ">
 
@@ -1097,8 +1097,7 @@ function AgentPage(
                                             {Number(user.musdBalance).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                         </td>
 
-                                        <td className="px-6 py-4 whitespace-nowrap">
-
+                                        <td className="px-6 py-4 flex flex-row gap-2 items-center justify-center">
 
                                             <Button
                                                 onClick={() => {
@@ -1132,6 +1131,54 @@ function AgentPage(
                                             >
                                                 MUSD 송금하기
                                             </Button>
+
+
+                                            {/* 출금 차단 */}
+                                            <div className="flex flex-row gap-2
+                                                items-center justify-center
+                                                border-l border-gray-200 pl-4">
+                                                {/* 차단상태 */}
+                                                {user?.isBlocked ? (
+                                                    <div className="flex flex-row gap-2 items-center">
+                                                        {/* 포인트 출금 차단 상태 */}
+                                                        <span className="text-sm text-red-500">
+                                                            출금 차단됨
+                                                        </span>
+                                                        {/* 포인트 출금 차단 해제 버튼 */}
+                                                        <Button
+                                                            onClick={() => {
+                                                                // 포인트 출금 차단 해제 기능은 현재 준비중입니다.
+                                                                alert('준비중입니다.');
+                                                            }}
+                                                            className="text-sm bg-red-500 text-white px-4 py-2 rounded"
+                                                        >
+                                                            출금 차단 해제
+                                                        </Button>
+                                                    </div>
+                                                ) : (
+                                                    <div className="flex flex-row gap-2 items-center">
+                                                        {/* 포인트 출금 가능 상태 */}
+                                                        <span className="text-sm text-green-500">
+                                                            출금 가능
+                                                        </span>
+                                                        {/* 포인트 출금 차단 버튼 */}
+                                                        <Button
+                                                            onClick={() => {
+                                                                // 포인트 출금 차단 기능은 현재 준비중입니다.
+                                                                alert('준비중입니다.');
+                                                            }}
+                                                            className="text-sm bg-gray-500 text-white px-4 py-2 rounded"
+                                                        >
+                                                            출금 차단
+                                                        </Button>
+                                                    </div>
+                                                )}
+                                            </div>
+
+
+
+
+
                                         </td>
                                     </tr>
                                 ))}
