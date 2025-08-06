@@ -20,6 +20,15 @@ export const bscContractAddressUSDT = "0xAa18146F88DE0381b9CC1cA6E5357f364c4ea0B
 
 
 
+export const contractAddressMKC = "0xAa18146F88DE0381b9CC1cA6E5357f364c4ea0BB"; // MKC on BSC
+
+
+export const contractAddressMKRW = "0x09AdA90502FeF059DecF9988CF88b65C28E3F16e"; // MKRW on BSC
+export const contractAddressMUSD = "0x13F4007D5e8822262B3F8D651F8a5cb7B4B5E753"; // MUSD on BSC
+
+
+
+
 
 // 721
 //export const nftDropContractAddressHorse = '0xAdC05ca4766ee90B68d8B75D8AdedB00ca6C5846';

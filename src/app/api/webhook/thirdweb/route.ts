@@ -9,12 +9,64 @@ import {
 */
 
 import {
-  getOneByWalletAddress
+  ///getOneByWalletAddress
+  upsertOneByWalletAddress,
 } from '@lib/api/user';
 
 import {
   insertOne,
 } from '@lib/api/transfer';
+
+
+
+import {
+  createThirdwebClient,
+  eth_getTransactionByHash,
+  getContract,
+  sendAndConfirmTransaction,
+  
+  sendTransaction,
+  sendBatchTransaction,
+  eth_maxPriorityFeePerGas,
+
+
+} from "thirdweb";
+
+//import { polygonAmoy } from "thirdweb/chains";
+import {
+  ethereum,
+  polygon,
+  arbitrum,
+  bsc,
+ } from "thirdweb/chains";
+
+import {
+  privateKeyToAccount,
+  smartWallet,
+  getWalletBalance,
+  
+ } from "thirdweb/wallets";
+
+
+import {
+  mintTo,
+  totalSupply,
+  transfer,
+  
+  getBalance,
+
+  balanceOf,
+
+} from "thirdweb/extensions/erc20";
+
+
+
+import {
+  bscContractAddressUSDT,
+  contractAddressMKC,
+  contractAddressMKRW,
+  contractAddressMUSD
+} from "../../../config/contractAddresses";
 
 
 
@@ -81,7 +133,7 @@ export async function POST(request: NextRequest) {
     type: 'event-log',
     data: {
       chainId: 137,
-      contractAddress: '0xAa18146F88DE0381b9CC1cA6E5357f364c4ea0BB',
+      contractAddress: '0xc2132d05d31c914a87c6611c10748aeb04b58e8f',
       blockNumber: 66572232,
       transactionHash: '0x4bb6866dee52a97254b73bcbf0e4ba1a3964c88efa4f72d37c6016dbf18eb382',
       topics: [
@@ -174,18 +226,179 @@ export async function POST(request: NextRequest) {
   }
   */
 
+  let user_id = fromAddress;
+
+  let url = `https://api-${process.env.SENDBIRD_APPLICATION_ID}.sendbird.com/v3/users/${user_id}?include_unread_count=true`;
+
+  //console.log("Fetching user from Sendbird:", url);
+
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Api-Token': process.env.SENDBIRD_API_TOKEN || '',
+    },
+  });
+
+  // check if the response  status 400
+  if (response.status === 400) {
+    const errorData = await response.json();
+    console.error("Error fetching user:", errorData);
+    //return NextResponse.json(
+    //  { error: errorData.message || 'Failed to fetch user' },
+    //  { status: response.status }
+    //);
+  } else if (!response.ok) {
+    console.error("Error fetching user:", response.statusText);
+   //return NextResponse.json(
+   //   { error: 'Failed to fetch user' },
+   //   { status: response.status }
+   // );
+  }
+
+  const fromUser = await response.json();
+
+
+
+  user_id = toAddress;
+  url = `https://api-${process.env.SENDBIRD_APPLICATION_ID}.sendbird.com/v3/users/${user_id}?include_unread_count=true`;
+  //console.log("Fetching user from Sendbird:", url);
+  const toResponse = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Api-Token': process.env.SENDBIRD_API_TOKEN || '',
+    },
+  });
+  // check if the response  status 400
+  if (toResponse.status === 400) {
+    const errorData = await toResponse.json();
+    console.error("Error fetching user:", errorData);
+    //return NextResponse.json(
+    //  { error: errorData.message || 'Failed to fetch user' },
+    //  { status: toResponse.status }
+    //);
+  } else if (!toResponse.ok) {
+    console.error("Error fetching user:", toResponse.statusText);
+    //return NextResponse.json(
+    //  { error: 'Failed to fetch user' },
+    //  { status: toResponse.status }
+    //);
+  }
+
+  const toUser = await toResponse.json();
+
+
+
+
+
   const result = insertOne({
+    contractAddress,
     transactionHash,
     transactionIndex,
     fromAddress,
     toAddress,
     value,
     timestamp,
+    fromUser,
+    toUser,
   });
 
   ///console.log("insertOne", result);
 
-  
+
+
+  // get MKRW, USDT balanceOf fromAddress and toAddress
+  // update user collection with MKRW, USDT balance
+
+  const client = createThirdwebClient({
+    secretKey: process.env.THIRDWEB_SECRET_KEY || "",
+  });
+
+  const chain = bsc; // or polygon, arbitrum, etc.
+
+  const contractMKC = getContract({
+    client,
+    chain: chain,
+    address: contractAddressMKC, // MKC on BSC
+  });
+
+  const contractUSDT = getContract({
+    client,
+    chain,
+    address: bscContractAddressUSDT, // USDT on BSC
+  });
+
+  const contractMKRW = getContract({
+    client,
+    chain,
+    address: contractAddressMKRW, // MKRW on BSC
+  });
+
+  const contractMUSD = getContract({
+    client,
+    chain,
+    address: contractAddressMUSD, // MUSD on BSC
+  });
+
+
+
+  const balanceMKCFrom = await balanceOf({
+    contract: contractMKC,
+    address: fromAddress,
+  });
+
+  const balanceMKRWFrom = await balanceOf({
+    contract: contractMKRW,
+    address: fromAddress,
+  });
+
+  const balanceMUSDFrom = await balanceOf({
+    contract: contractMUSD,
+    address: fromAddress,
+  });
+
+  const balanceUSDTFrom = await balanceOf({
+    contract: contractUSDT,
+    address: fromAddress,
+  });
+
+
+  // update user collection with MKRW, USDT balance for fromAddress
+  await upsertOneByWalletAddress({
+    walletAddress: fromAddress,
+    nickname: fromUser.nickname,
+    mkcBalance: Number(balanceMKCFrom) / 10 ** 18, // assuming MKC has 18 decimals
+    mkrwBalance: Number(balanceMKRWFrom) / 10 ** 18, // assuming MKRW has 18 decimals
+    musdBalance: Number(balanceMUSDFrom) / 10 ** 18, // assuming MUSD has 18 decimals
+    usdtBalance: Number(balanceUSDTFrom) / 10 ** 18, // assuming USDT has 18 decimals
+  });
+
+
+
+  const balanceMKRWTo = await balanceOf({
+    contract: contractMKRW,
+    address: toAddress,
+  });
+
+  const balanceUSDTTo = await balanceOf({
+    contract: contractUSDT,
+    address: toAddress,
+  });
+
+  // update user collection with MKRW, USDT balance for toAddress
+  await upsertOneByWalletAddress({
+    walletAddress: toAddress,
+    nickname: toUser.nickname,
+    mkcBalance: Number(balanceMKCFrom) / 10 ** 18, // assuming MKC has 18 decimals
+    mkrwBalance: Number(balanceMKRWTo) / 10 ** 18,
+    musdBalance: Number(balanceMUSDFrom) / 10 ** 18, // assuming MUSD has 18 decimals
+    usdtBalance: Number(balanceUSDTTo) / 10 ** 18, // assuming USDT has 18 decimals
+  });
+
+
+
+
 
   return NextResponse.json({
     result: "ok",
@@ -205,14 +418,14 @@ body {
   status: 'mined',
   chainId: '137',
   fromAddress: '0x865D4529EF3a262a7C63145C8906AeD9a1b522bD',
-  toAddress: '0xAa18146F88DE0381b9CC1cA6E5357f364c4ea0BB',
+  toAddress: '0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
   data: '0xa9059cbb0000000000000000000000005202a5853c338a38485fa11eda67ca95cb9fce99000000000000000000000000000000000000000000000000000000000015d1f0',
   value: '0',
   nonce: 34,
   deployedContractAddress: null,
   deployedContractType: null,
   functionName: 'transfer',
-  functionArgs: '["0x5202a5853c338A38485Fa11eda67ca95cb9fce99","1.43","0xAa18146F88DE0381b9CC1cA6E5357f364c4ea0BB"]',
+  functionArgs: '["0x5202a5853c338A38485Fa11eda67ca95cb9fce99","1.43","0xc2132d05d31c914a87c6611c10748aeb04b58e8f"]',
   extension: 'erc20',
   gasLimit: '530000',
   gasPrice: null,

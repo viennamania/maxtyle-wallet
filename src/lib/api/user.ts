@@ -1575,3 +1575,62 @@ export async function getOneByTelegramId(
   return results;
 
 }
+
+
+
+
+
+// upsertOne
+export async function upsertOneByWalletAddress(data: any) {
+  //console.log('upsertOne data: ' + JSON.stringify(data));
+
+  if (!data.walletAddress) {
+    return null;
+  }
+
+  const client = await clientPromise;
+  const collection = client.db('damoa').collection('users');
+
+  // update and return updated user
+  // or insert if not exist
+
+  const checkUser = await collection.findOne<UserProps>(
+    { walletAddress: data.walletAddress }
+  );
+
+
+  if (checkUser) {
+    const result = await collection.updateOne(
+      { walletAddress: data.walletAddress },
+      { $set: data }
+    );
+
+    if (result) {
+      const updated = await collection.findOne<UserProps>(
+        { walletAddress: data.walletAddress },
+      );
+
+      return updated;
+    } else {
+      return null;
+    }
+  }
+
+
+  const result = await collection.insertOne(
+    {
+      ...data,
+      createdAt: new Date().toISOString(),
+    }
+  );
+
+  if (result) {
+    return {
+      ...data,
+      createdAt: new Date().toISOString(),
+    };
+  } else {
+    return null;
+  }
+
+}
