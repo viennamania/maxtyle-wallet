@@ -145,6 +145,99 @@ function AgentPage(
 
 
 
+  // function to update nitice content
+  const [updatingNotice, setUpdatingNotice] = useState(false);
+  const [noticeTitle, setNoticeTitle] = useState("");
+  const [noticeContent, setNoticeContent] = useState("");
+  const [noticeUpdated, setNoticeUpdated] = useState(false);
+  const updateNotice = async () => {
+    setUpdatingNotice(true);
+    try {
+      const response = await fetch("/api/notice/updateNotice", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: noticeTitle,
+          content: noticeContent,
+        }),
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        setNoticeUpdated(true);
+      } else {
+        console.error("Failed to update notice:", data.message);
+      }
+    } catch (error) {
+      console.error("Error updating notice:", error);
+    } finally {
+      setUpdatingNotice(false);
+    }
+  };
+
+
+  // function to create notice
+const [creatingNotice, setCreatingNotice] = useState(false);
+const [newNoticeTitle, setNewNoticeTitle] = useState("");
+const [newNoticeContent, setNewNoticeContent] = useState("");
+const [noticeCreated, setNoticeCreated] = useState(false);
+const createNotice = async () => {
+  setCreatingNotice(true);
+  try {
+    const response = await fetch("/api/notice/createNotice", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+        body: JSON.stringify({
+            title: newNoticeTitle,
+            content: newNoticeContent,
+        }),
+    });
+    const data = await response.json();
+    if (data.success) {
+      setNoticeCreated(true);
+      // Optionally, you can reset the form fields after successful creation
+      setNewNoticeTitle("");
+      setNewNoticeContent("");
+    } else {
+      console.error("Failed to create notice:", data.message);
+    }
+  } catch (error) {
+    console.error("Error creating notice:", error);
+  } finally {
+    setCreatingNotice(false);
+  }
+};
+
+
+
+  // get notice list
+  const [noticeList, setNoticeList] = useState<any[]>([]);
+  const [loadingNotices, setLoadingNotices] = useState(true);
+  useEffect(() => {
+    const fetchNotices = async () => {
+      try {
+        setLoadingNotices(true);
+        const response = await fetch("/api/notice/getNotices");
+        const data = await response.json();
+        if (data.success) {
+          setNoticeList(data.notices);
+        } else {
+          console.error("Failed to fetch notices:", data.message);
+        }
+      } catch (error) {
+        console.error("Error fetching notices:", error);
+      } finally {
+          setLoadingNotices(false);
+      }
+    };
+    fetchNotices();
+  }, []);
+
+
 
 
 

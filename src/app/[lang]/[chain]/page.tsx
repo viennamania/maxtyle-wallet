@@ -157,23 +157,19 @@ const contractAddressArbitrum = "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"; //
 
 const contractAddressEthereum = "0xdac17f958d2ee523a2206206994597c13d831ec7"; // MKC on Ethereum
 
-const contractAddressBsc = "0xAa18146F88DE0381b9CC1cA6E5357f364c4ea0BB"; // MKC on BSC
+//const contractAddressBsc = "0xAa18146F88DE0381b9CC1cA6E5357f364c4ea0BB"; // MKC on BSC
 
 
-const contractAddressMKRW = "0x09AdA90502FeF059DecF9988CF88b65C28E3F16e"; // MKRW on BSC
-const contractAddressMUSD = "0x13F4007D5e8822262B3F8D651F8a5cb7B4B5E753"; // MUSD on BSC
-
-
-const erc1155ContractAddress = "0x796f8867E6D474C1d63e4D7ea5f52B48E4bA83D6";
+//const contractAddressMKRW = "0x09AdA90502FeF059DecF9988CF88b65C28E3F16e"; // MKRW on BSC
+//const contractAddressMUSD = "0x13F4007D5e8822262B3F8D651F8a5cb7B4B5E753"; // MUSD on BSC
 
 
 
-/*
-const client = createThirdwebClient({
-  clientId: "dfb94ef692c2f754a60d35aeb8604f3d",
-});
-*/
-
+import {
+    contractAddressMKC,
+    contractAddressMKRW,
+    contractAddressMUSD,
+} from "@/app/config/contractAddresses";
 
 
 
@@ -235,7 +231,7 @@ function IndexPage(
 
   
 
-    address: params.chain === "bsc" ? contractAddressBsc : params.chain === "arbitrum" ? contractAddressArbitrum : params.chain === "polygon" ? contractAddress : params.chain === "ethereum" ? contractAddressEthereum : contractAddress,
+    address: params.chain === "bsc" ? contractAddressMKC : params.chain === "arbitrum" ? contractAddressArbitrum : params.chain === "polygon" ? contractAddress : params.chain === "ethereum" ? contractAddressEthereum : contractAddress,
 
 
     // OPTIONAL: the contract's abi
@@ -264,13 +260,7 @@ function IndexPage(
     address: contractAddressMUSD,
   });
 
-  /*
-  const contractErc1155 = getContract({
-    client,
-    chain: params.chain === "bsc" ? bsc : params.chain === "arbitrum" ? arbitrum : params.chain === "polygon" ? polygon : params.chain === "ethereum" ? ethereum : polygon,
-    address: erc1155ContractAddress,
-  });
-  */
+
 
 
 
@@ -2037,24 +2027,7 @@ function IndexPage(
                       ))}
 
 
-                      {/* 더보기 버튼 */}
-                      <button
-                          onClick={() => {
-                              // redirect to nft detail page
-                              router.push(
-                                  "/" + params.lang + "/" + params.chain + "/my-nft-snowball/" + erc1155ContractAddress + "?start=" + start
-                              );
-                          }}
-                          className="w-full
-                            rounded-b-lg
-                            bg-gray-100
-                            p-2
-                            text-sm md:text-lg font-semibold text-zinc-800
-                            hover:bg-gray-200
-                            "
-                      >
-                        더보기
-                      </button>
+
 
 
                   </div>
