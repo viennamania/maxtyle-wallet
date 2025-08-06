@@ -159,7 +159,9 @@ Searches for blocked users with metadata containing an item with the key specifi
   }
 
   const data = await response.json();
-  console.log("Fetched users:", data);
+  
+  ///console.log("Fetched users:", data);
+
 
   return NextResponse.json({
     result: {
