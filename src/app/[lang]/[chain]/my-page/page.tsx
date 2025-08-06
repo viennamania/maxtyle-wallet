@@ -2454,7 +2454,7 @@ function AgentPage(
             <div className="w-full fixed bottom-0 left-0 right-0 items-center justify-center">
 
 
-              <div className="w-full grid grid-cols-3 gap-0 justify-center items-center p-0
+              <div className="w-full grid grid-cols-2 gap-0 justify-center items-center p-0
                 bg-zinc-100 rounded-lg text-center
               ">
 
@@ -2520,6 +2520,7 @@ function AgentPage(
                 {/* NFT 상점 */}
 
                 {/* 친구 초대 */}
+                {/*}
                 <button
                   onClick={() => {
                     router.push(
@@ -2544,6 +2545,9 @@ function AgentPage(
                     회원목록
                   </p>
                 </button>
+                */}
+
+           
 
                 {/* 마이페이지 */}
                 {/* selected state */}

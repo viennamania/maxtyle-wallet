@@ -1920,7 +1920,7 @@ function AgentPage(
             <div className="w-full fixed bottom-0 left-0 right-0 items-center justify-center">
 
 
-              <div className="w-full grid grid-cols-3 gap-0 justify-center items-center p-0
+              <div className="w-full grid grid-cols-2 gap-0 justify-center items-center p-0
                 bg-zinc-100 rounded-lg text-center
               ">
 
@@ -1987,14 +1987,15 @@ function AgentPage(
 
                 {/* 친구 초대 */}
                 {/* selected state */}
+                {/*
                 <button
-                    /*
+                    
                   onClick={() => {
                     router.push(
                       "/" + params.lang + "/" + params.chain + "/users"
                     );
                   }}
-                    */
+                    
                   className="flex flex-col justify-center items-center gap-0
                     bg-blue-200 text-blue-800
                     transition duration-300 ease-in-out
@@ -2013,6 +2014,7 @@ function AgentPage(
                     회원목록
                   </p>
                 </button>
+                */}
 
                 {/* 마이페이지 */}
                 <button

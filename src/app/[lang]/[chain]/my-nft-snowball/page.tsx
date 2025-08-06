@@ -1899,6 +1899,7 @@ function AgentPage(
                 </button>
 
                 {/* 친구 초대 */}
+                {/*
                 <button
                   onClick={() => {
                     router.push(
@@ -1923,6 +1924,7 @@ function AgentPage(
                     회원목록
                   </p>
                 </button>
+                */}
 
                 {/* 마이페이지 */}
                 <button
