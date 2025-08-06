@@ -599,7 +599,9 @@ export async function getOneByWalletAddress(
   );
 
 
-  //console.log('getOneByWalletAddress results: ' + results);
+  ///console.log('getOneByWalletAddress results: ' + JSON.stringify(results));
+
+
 
   return results;
 

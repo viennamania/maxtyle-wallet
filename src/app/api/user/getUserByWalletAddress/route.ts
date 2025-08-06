@@ -17,6 +17,9 @@ export async function POST(request: NextRequest) {
   const result = await getOneByWalletAddress(walletAddress);
 
 
+  ///console.log("getUserByWalletAddress result:", result);
+
+
  
  
   return NextResponse.json({

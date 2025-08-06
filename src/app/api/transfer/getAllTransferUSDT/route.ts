@@ -23,6 +23,15 @@ export async function POST(request: NextRequest) {
 
   const { walletAddress } = body;
 
+
+  return NextResponse.json(
+    { error: "This endpoint is deprecated. Please use the new endpoint." },
+    { status: 410 } // 410 Gone
+  );
+
+
+
+
   if (!walletAddress) {
     return NextResponse.json(
       { error: "Wallet address is required" },

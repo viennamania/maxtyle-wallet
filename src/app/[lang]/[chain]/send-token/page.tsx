@@ -80,15 +80,36 @@ const styles = {
 
 
 
-
 const wallets = [
   inAppWallet({
     auth: {
-      options: ["phone"],
+      options: [
+        "google",
+        "discord",
+        "email",
+        "x",
+        "passkey",
+        //"phone",
+        "facebook",
+        "line",
+        "apple",
+        "coinbase",
+      ],
     },
   }),
-];
 
+  /*
+  createWallet("com.coinbase.wallet"),
+  createWallet("me.rainbow"),
+  createWallet("io.rabby"),
+  createWallet("io.zerion.wallet"),
+  createWallet("io.metamask"),
+  //createWallet("com.binance.wallet"),
+  createWallet("com.bitget.web3"),
+  createWallet("com.trustwallet.app"),
+  createWallet("com.okex.wallet"),
+  */
+];
 
 
 
@@ -611,6 +632,8 @@ export default function SendUsdt({ params }: any) {
       settlementAmountOfFee: '',
       tronWalletAddress: '',
       tronWalletPrivateKey: '',
+
+      isBlocked: false, // user block status
     }
   );
 
@@ -633,6 +656,8 @@ export default function SendUsdt({ params }: any) {
       if (!response) return;
 
       const data = await response.json();
+
+      console.log("getUserByWalletAddress", data);
 
 
       setUser(data.result);
@@ -1318,48 +1343,6 @@ export default function SendUsdt({ params }: any) {
 
 
 
-  // transfer list USDT
-  const [transferListUSDT, setTransferListUSDT] = useState([]);
-  const [loadingTransferListUSDT, setLoadingTransferListUSDT] = useState(false);
-  useEffect(() => {
-    const getTransferListUSDT = async () => {
-      setLoadingTransferListUSDT(true);
-      const response = await fetch('/api/transfer/getAllTransferUSDT', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          walletAddress: address,
-        }),
-      });
-      if (!response.ok) {
-        toast.error("전송 내역을 불러오는 데 실패했습니다.");
-        setLoadingTransferListUSDT(false);
-        return;
-      }
-      const data = await response.json();
-      setTransferListUSDT(data.result.transfers);
-      setLoadingTransferListUSDT(false);
-    };
-    if (address) {
-      getTransferListUSDT();
-    }
-
-    // setInterval to refresh transfer list every 5 seconds
-    const interval = setInterval(() => {
-      if (address) {
-        getTransferListUSDT();
-      }
-    }
-    , 5000);
-    return () => {
-      clearInterval(interval);
-    };
-  }, [address]);
-
-
-
 
   return (
 
@@ -1782,442 +1765,457 @@ export default function SendUsdt({ params }: any) {
 
               <div className='mt-5 w-full flex flex-col gap-5'>
 
-                <div className='
-                  w-full  flex flex-col gap-5 border border-gray-300 rounded-lg p-4 bg-white
-                  '>
+                {user.isBlocked ? (
 
-
-                  <div className='flex flex-row gap-2 items-center justify-start'>
-                    {/* dot icon */}
-                    <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                    <div className="text-sm
-                      text-gray-800
-                    ">
-                      {Enter_the_amount_and_recipient_address}
+                  <div className="w-full flex flex-col items-center justify-center gap-2 p-4 bg-red-100 border border-red-300 rounded-lg">
+                    <div className="text-red-600 font-semibold text-lg">
+                      당신의 계정은 차단되었습니다.
+                    </div>
+                    <div className="text-red-500 text-sm">
+                      고객 지원팀에 문의하여 자세한 정보를 확인하세요.
                     </div>
                   </div>
 
+                ) : (
 
-                  <div className='w-full mb-5 flex flex-col xl:flex-row gap-5 items-start justify-between'>
-
-                    <div className='w-full flex flex-col gap-5 items-start justify-between'>
-                      <input
-                        disabled={sending}
-                        type="number"
-                        //placeholder="Enter amount"
-                        className=" w-full p-2 border
-                        border-gray-300 rounded text-zinc-800 text-2xl font-semibold"
+                  <div className='
+                    w-full  flex flex-col gap-5 border border-gray-300 rounded-lg p-4 bg-white
+                    '>
 
 
-                        placeholder="Enter amount"
-                        
-                        value={amount}
-
-                        onChange={(e) => (
-
-                          // check if the value is a number
-
-
-                          // check if start 0, if so remove it
-
-                          e.target.value = e.target.value.replace(/^0+/, ''),
-
-
-
-                          // check balance
-
-                          setAmount(e.target.value as any)
-
-                        )}
-                      />
-                
-            
-
-                      {/* check box for want to receive wallet address */}
-                      {/*
-                      <div className="flex flex-row items-center gap-2">
-                        <input
-                          type="checkbox"
-                          className="w-6 h-6"
-                          checked={wantToReceiveWalletAddress}
-                          onChange={(e) => setWantToReceiveWalletAddress(e.target.checked)}
-                        />
-                        <div className="text-white">{Enter_Wallet_Address}</div>
+                    <div className='flex flex-row gap-2 items-center justify-start'>
+                      {/* dot icon */}
+                      <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                      <div className="text-sm
+                        text-gray-800
+                      ">
+                        {Enter_the_amount_and_recipient_address}
                       </div>
-                      */}
-
                     </div>
 
 
-                
-                
-                    {!wantToReceiveWalletAddress ? (
-                      <>
-                        <div className='w-full flex flex-col gap-5 items-start justify-between'>
+                    <div className='w-full mb-5 flex flex-col xl:flex-row gap-5 items-start justify-between'>
 
-
-
-
-                          <select
-                            disabled={sending}
-
-                            className="
-                              
-                              w-56 p-2 border border-gray-300 rounded text-black text-2xl font-semibold "
-                              
-                            value={
-                              recipient?.nickname
-                            }
-
-
-                            onChange={(e) => {
-
-                              const selectedUser = users.find((user) => user.nickname === e.target.value) as any;
-
-                              console.log("selectedUser", selectedUser);
-
-                              setRecipient(selectedUser);
-
-                            } } 
-
-                          >
-                            <option value="">{Select_a_user}</option>
-                            
-
-                            {users.map((user) => (
-                              <option key={user.id} value={user.nickname}>{user.nickname}</option>
-                            ))}
-                          </select>
-
-                          {/* select user profile image */}
-
-                          <div className=" w-full flex flex-row gap-2 items-center justify-center">
-                            <Image
-                              src={recipient?.avatar || '/profile-default.png'}
-                              alt="profile"
-                              width={38}
-                              height={38}
-                              className="rounded-full"
-                              style={{
-                                objectFit: 'cover',
-                                width: '38px',
-                                height: '38px',
-                              }}
-                            />
-
-                            {recipient?.walletAddress && (
-                              <Image
-                                src="/verified.png"
-                                alt="check"
-                                width={28}
-                                height={28}
-                              />
-                            )}
-
-                          </div>
-
-                        </div>
-
-                
-                        {/* input wallet address */}
-                        
-                        <input
-                          disabled={true}
-                          type="text"
-                          placeholder={User_wallet_address}
-                          className=" w-80  xl:w-full p-2 border border-gray-300 rounded text-white text-xs xl:text-lg font-semibold"
-                          value={
-                            recipient?.walletAddress
-                          }
-                          onChange={(e) => {
-          
-                            setRecipient({
-                              ...recipient,
-                              walletAddress: e.target.value,
-                            });
-
-                          } }
-
-                        />
-
-                  
-
-
-              
-
-
-                      </>
-
-                    ) : (
-
-                      <div className='w-full flex flex-col gap-5 items-center justify-between'>
+                      <div className='w-full flex flex-col gap-5 items-start justify-between'>
                         <input
                           disabled={sending}
-                          type="text"
-                          placeholder={User_wallet_address}
-                          className=" w-full p-2 border border-gray-300 rounded
-                          text-zinc-800 text-sm font-semibold"
-
-                          value={recipient.walletAddress}
-
-                          onChange={(e) => setRecipient({
-                            ...recipient,
-                            walletAddress: e.target.value,
-                          })}
-
-                        />
-
-                        {isWhateListedUser ? (
-                          <div className="flex flex-row gap-2 items-center justify-center">
+                          type="number"
+                          //placeholder="Enter amount"
+                          className=" w-full p-2 border
+                          border-gray-300 rounded text-zinc-800 text-2xl font-semibold"
 
 
-                            <Image
-                              src={recipient.avatar || '/profile-default.png'}
-                              alt="profile"
-                              width={30}
-                              height={30}
-                              className="rounded-full"
-                              style={{
-                                objectFit: 'cover',
-                                width: '38px',
-                                height: '38px',
-                              }}
-                            />
-                            <div className="text-white">{recipient?.nickname}</div>
-                            <Image
-                              src="/verified.png"
-                              alt="check"
-                              width={30}
-                              height={30}
-                            />
-                            
-                          </div>
-                        ) : (
-                          <>
+                          placeholder="Enter amount"
+                          
+                          value={amount}
 
-                          {/*
-                          {recipient?.walletAddress && (
-                            <div className='flex flex-row gap-2 items-center justify-center'>
+                          onChange={(e) => (
 
-                              <div className="w-4 h-4 bg-green-500 rounded-full mr-2"></div>
+                            // check if the value is a number
 
-                              <div className="text-red-500">
-                                {This_address_is_not_white_listed}<br />
-                                {If_you_are_sure_please_click_the_send_button}
-                              </div>
-                            </div>
+
+                            // check if start 0, if so remove it
+
+                            e.target.value = e.target.value.replace(/^0+/, ''),
+
+
+
+                            // check balance
+
+                            setAmount(e.target.value as any)
 
                           )}
-                          */}
+                        />
+                  
+              
 
-                          </>
-                        )}
-
-
-
-                        {/* qr scanner button */}
-                        <div className="w-full flex flex-row gap-2 items-center justify-center">
-                          <button
-                            disabled={sending}
-                            onClick={() => setShowQrScanner(!showQrScanner)}
-                            className="w-full p-2 rounded-lg text-sm font-semibold bg-gray-300 text-gray-400"
-                          >
-                            {showQrScanner ? 'Close QR Scanner' : 'Open QR Scanner'}
-                          </button>
+                        {/* check box for want to receive wallet address */}
+                        {/*
+                        <div className="flex flex-row items-center gap-2">
+                          <input
+                            type="checkbox"
+                            className="w-6 h-6"
+                            checked={wantToReceiveWalletAddress}
+                            onChange={(e) => setWantToReceiveWalletAddress(e.target.checked)}
+                          />
+                          <div className="text-white">{Enter_Wallet_Address}</div>
                         </div>
-
-                        { showQrScanner && (
-
-
-                          <div className="w-full flex flex-col items-center justify-center gap-2">
-                            {/*
-                            <div style={styles.controls}>
-                              <select onChange={(e) => setDeviceId(e.target.value)}>
-                                <option value={undefined}>Select a device</option>
-                                {devices.map((device, index) => (
-                                  <option key={index} value={device.deviceId}>
-                                    {device.label}
-                                  </option>
-                                ))}
-                              </select>
-                              <select
-                                style={{ marginLeft: 5 }}
-                                onChange={(e) => setTracker(e.target.value)}
-                              >
-                                <option value="centerText">Center Text</option>
-                                <option value="outline">Outline</option>
-                                <option value="boundingBox">Bounding Box</option>
-                                <option value={undefined}>No Tracker</option>
-                              </select>
-                            </div>
-                            */}
-                            <Scanner
-                              formats={[
-                                "qr_code",
-                                "micro_qr_code",
-                                "rm_qr_code",
-                                "maxi_code",
-                                "pdf417",
-                                "aztec",
-                                "data_matrix",
-                                "matrix_codes",
-                                "dx_film_edge",
-                                "databar",
-                                "databar_expanded",
-                                "codabar",
-                                "code_39",
-                                "code_93",
-                                "code_128",
-                                "ean_8",
-                                "ean_13",
-                                "itf",
-                                "linear_codes",
-                                "upc_a",
-                                "upc_e",
-                              ]}
-                              constraints={{
-                                deviceId: deviceId,
-                              }}
-                              onScan={(detectedCodes) => {
-                                handleScan(detectedCodes[0].rawValue);
-                              }}
-                              onError={(error) => {
-                                console.log(`onError: ${error}'`);
-                              }}
-                              styles={{ container: { height: "400px", width: "350px" } }}
-                              components={{
-                                onOff: true,
-                                torch: true,
-                                zoom: true,
-                                finder: true,
-                                tracker: getTracker(),
-                              }}
-                              allowMultiple={true}
-                              scanDelay={2000}
-                              paused={pause}
-                            />
-                          </div>
-
-
-                        )}
-
-
-
-
+                        */}
 
                       </div>
 
-                    )}
+
+                  
+                  
+                      {!wantToReceiveWalletAddress ? (
+                        <>
+                          <div className='w-full flex flex-col gap-5 items-start justify-between'>
+
+
+
+
+                            <select
+                              disabled={sending}
+
+                              className="
+                                
+                                w-56 p-2 border border-gray-300 rounded text-black text-2xl font-semibold "
+                                
+                              value={
+                                recipient?.nickname
+                              }
+
+
+                              onChange={(e) => {
+
+                                const selectedUser = users.find((user) => user.nickname === e.target.value) as any;
+
+                                console.log("selectedUser", selectedUser);
+
+                                setRecipient(selectedUser);
+
+                              } } 
+
+                            >
+                              <option value="">{Select_a_user}</option>
+                              
+
+                              {users.map((user) => (
+                                <option key={user.id} value={user.nickname}>{user.nickname}</option>
+                              ))}
+                            </select>
+
+                            {/* select user profile image */}
+
+                            <div className=" w-full flex flex-row gap-2 items-center justify-center">
+                              <Image
+                                src={recipient?.avatar || '/profile-default.png'}
+                                alt="profile"
+                                width={38}
+                                height={38}
+                                className="rounded-full"
+                                style={{
+                                  objectFit: 'cover',
+                                  width: '38px',
+                                  height: '38px',
+                                }}
+                              />
+
+                              {recipient?.walletAddress && (
+                                <Image
+                                  src="/verified.png"
+                                  alt="check"
+                                  width={28}
+                                  height={28}
+                                />
+                              )}
+
+                            </div>
+
+                          </div>
+
+                  
+                          {/* input wallet address */}
+                          
+                          <input
+                            disabled={true}
+                            type="text"
+                            placeholder={User_wallet_address}
+                            className=" w-80  xl:w-full p-2 border border-gray-300 rounded text-white text-xs xl:text-lg font-semibold"
+                            value={
+                              recipient?.walletAddress
+                            }
+                            onChange={(e) => {
+            
+                              setRecipient({
+                                ...recipient,
+                                walletAddress: e.target.value,
+                              });
+
+                            } }
+
+                          />
 
                     
 
-                  </div>
 
-                  {/* otp verification */}
-                  {/*
-                  {verifiedOtp ? (
-                    <div className="w-full flex flex-row gap-2 items-center justify-center">
-                      <Image
-                        src="/verified.png"
-                        alt="check"
-                        width={30}
-                        height={30}
-                      />
-                      <div className="text-white">OTP verified</div>
-                    </div>
-                  ) : (
                 
-            
-                    <div className="w-full flex flex-row gap-2 items-start">
 
-                      <button
-                        disabled={!address || !recipient?.walletAddress || !amount || isSendingOtp}
-                        onClick={sendOtp}
-                        className={`
-                          
-                          ${isSendedOtp && 'hidden'}
 
-                          w-32 p-2 rounded-lg text-sm font-semibold
+                        </>
 
-                            ${
-                            !address || !recipient?.walletAddress || !amount || isSendingOtp
-                            ?'bg-gray-300 text-gray-400'
-                            : 'bg-green-500 text-white'
-                            }
-                          
-                          `}
-                      >
-                          Send OTP
-                      </button>
+                      ) : (
 
-                      <div className={`flex flex-row gap-2 items-center justify-center ${!isSendedOtp && 'hidden'}`}>
-                        <input
-                          type="text"
-                          placeholder="Enter OTP"
-                          className=" w-40 p-2 border border-gray-300 rounded text-black text-sm font-semibold"
-                          value={otp}
-                          onChange={(e) => setOtp(e.target.value)}
+                        <div className='w-full flex flex-col gap-5 items-center justify-between'>
+                          <input
+                            disabled={sending}
+                            type="text"
+                            placeholder={User_wallet_address}
+                            className=" w-full p-2 border border-gray-300 rounded
+                            text-zinc-800 text-sm font-semibold"
+
+                            value={recipient.walletAddress}
+
+                            onChange={(e) => setRecipient({
+                              ...recipient,
+                              walletAddress: e.target.value,
+                            })}
+
+                          />
+
+                          {isWhateListedUser ? (
+                            <div className="flex flex-row gap-2 items-center justify-center">
+
+
+                              <Image
+                                src={recipient.avatar || '/profile-default.png'}
+                                alt="profile"
+                                width={30}
+                                height={30}
+                                className="rounded-full"
+                                style={{
+                                  objectFit: 'cover',
+                                  width: '38px',
+                                  height: '38px',
+                                }}
+                              />
+                              <div className="text-white">{recipient?.nickname}</div>
+                              <Image
+                                src="/verified.png"
+                                alt="check"
+                                width={30}
+                                height={30}
+                              />
+                              
+                            </div>
+                          ) : (
+                            <>
+
+                            {/*
+                            {recipient?.walletAddress && (
+                              <div className='flex flex-row gap-2 items-center justify-center'>
+
+                                <div className="w-4 h-4 bg-green-500 rounded-full mr-2"></div>
+
+                                <div className="text-red-500">
+                                  {This_address_is_not_white_listed}<br />
+                                  {If_you_are_sure_please_click_the_send_button}
+                                </div>
+                              </div>
+
+                            )}
+                            */}
+
+                            </>
+                          )}
+
+
+
+                          {/* qr scanner button */}
+                          <div className="w-full flex flex-row gap-2 items-center justify-center">
+                            <button
+                              disabled={sending}
+                              onClick={() => setShowQrScanner(!showQrScanner)}
+                              className="w-full p-2 rounded-lg text-sm font-semibold bg-gray-300 text-gray-400"
+                            >
+                              {showQrScanner ? 'Close QR Scanner' : 'Open QR Scanner'}
+                            </button>
+                          </div>
+
+                          { showQrScanner && (
+
+
+                            <div className="w-full flex flex-col items-center justify-center gap-2">
+                              {/*
+                              <div style={styles.controls}>
+                                <select onChange={(e) => setDeviceId(e.target.value)}>
+                                  <option value={undefined}>Select a device</option>
+                                  {devices.map((device, index) => (
+                                    <option key={index} value={device.deviceId}>
+                                      {device.label}
+                                    </option>
+                                  ))}
+                                </select>
+                                <select
+                                  style={{ marginLeft: 5 }}
+                                  onChange={(e) => setTracker(e.target.value)}
+                                >
+                                  <option value="centerText">Center Text</option>
+                                  <option value="outline">Outline</option>
+                                  <option value="boundingBox">Bounding Box</option>
+                                  <option value={undefined}>No Tracker</option>
+                                </select>
+                              </div>
+                              */}
+                              <Scanner
+                                formats={[
+                                  "qr_code",
+                                  "micro_qr_code",
+                                  "rm_qr_code",
+                                  "maxi_code",
+                                  "pdf417",
+                                  "aztec",
+                                  "data_matrix",
+                                  "matrix_codes",
+                                  "dx_film_edge",
+                                  "databar",
+                                  "databar_expanded",
+                                  "codabar",
+                                  "code_39",
+                                  "code_93",
+                                  "code_128",
+                                  "ean_8",
+                                  "ean_13",
+                                  "itf",
+                                  "linear_codes",
+                                  "upc_a",
+                                  "upc_e",
+                                ]}
+                                constraints={{
+                                  deviceId: deviceId,
+                                }}
+                                onScan={(detectedCodes) => {
+                                  handleScan(detectedCodes[0].rawValue);
+                                }}
+                                onError={(error) => {
+                                  console.log(`onError: ${error}'`);
+                                }}
+                                styles={{ container: { height: "400px", width: "350px" } }}
+                                components={{
+                                  onOff: true,
+                                  torch: true,
+                                  zoom: true,
+                                  finder: true,
+                                  tracker: getTracker(),
+                                }}
+                                allowMultiple={true}
+                                scanDelay={2000}
+                                paused={pause}
+                              />
+                            </div>
+
+
+                          )}
+
+
+
+
+
+                        </div>
+
+                      )}
+
+                      
+
+                    </div>
+
+                    {/* otp verification */}
+                    {/*
+                    {verifiedOtp ? (
+                      <div className="w-full flex flex-row gap-2 items-center justify-center">
+                        <Image
+                          src="/verified.png"
+                          alt="check"
+                          width={30}
+                          height={30}
                         />
+                        <div className="text-white">OTP verified</div>
+                      </div>
+                    ) : (
+                  
+              
+                      <div className="w-full flex flex-row gap-2 items-start">
 
                         <button
-                          disabled={!otp || isVerifingOtp}
-                          onClick={verifyOtp}
-                          className={`w-32 p-2 rounded-lg text-sm font-semibold
+                          disabled={!address || !recipient?.walletAddress || !amount || isSendingOtp}
+                          onClick={sendOtp}
+                          className={`
+                            
+                            ${isSendedOtp && 'hidden'}
+
+                            w-32 p-2 rounded-lg text-sm font-semibold
 
                               ${
-                              !otp || isVerifingOtp
+                              !address || !recipient?.walletAddress || !amount || isSendingOtp
                               ?'bg-gray-300 text-gray-400'
                               : 'bg-green-500 text-white'
                               }
                             
                             `}
                         >
-                            Verify OTP
+                            Send OTP
                         </button>
+
+                        <div className={`flex flex-row gap-2 items-center justify-center ${!isSendedOtp && 'hidden'}`}>
+                          <input
+                            type="text"
+                            placeholder="Enter OTP"
+                            className=" w-40 p-2 border border-gray-300 rounded text-black text-sm font-semibold"
+                            value={otp}
+                            onChange={(e) => setOtp(e.target.value)}
+                          />
+
+                          <button
+                            disabled={!otp || isVerifingOtp}
+                            onClick={verifyOtp}
+                            className={`w-32 p-2 rounded-lg text-sm font-semibold
+
+                                ${
+                                !otp || isVerifingOtp
+                                ?'bg-gray-300 text-gray-400'
+                                : 'bg-green-500 text-white'
+                                }
+                              
+                              `}
+                          >
+                              Verify OTP
+                          </button>
+                        </div>
+
                       </div>
 
-                    </div>
-
-                  )}
-                  */}
-                  
-
-
-
-                  <button
+                    )}
+                    */}
                     
-                    disabled={!address || !recipient?.walletAddress || !amount || sending || !verifiedOtp}
 
-                    onClick={sendUsdt}
 
-                    className={`mt-5 w-full p-2 rounded-lg text-xl font-semibold
 
-                        ${
-                        !address || !recipient?.walletAddress || !amount || sending || !verifiedOtp
-                        ?'bg-gray-300 text-gray-400'
-                        : 'bg-green-500 text-white'
-                        }
+                    <button
                       
-                      `}
-                  >
-                    <div className='flex flex-row gap-2 items-center justify-center'>
-                      <Image
-                        src="/loading.png"
-                        alt="send"
-                        width={24}
-                        height={24}
-                        className={`
-                          ${sending ? 'animate-spin' : 'hidden'}
+                      disabled={!address || !recipient?.walletAddress || !amount || sending || !verifiedOtp}
+
+                      onClick={sendUsdt}
+
+                      className={`mt-5 w-full p-2 rounded-lg text-xl font-semibold
+
+                          ${
+                          !address || !recipient?.walletAddress || !amount || sending || !verifiedOtp
+                          ?'bg-gray-300 text-gray-400'
+                          : 'bg-green-500 text-white'
+                          }
+                        
                         `}
-                      />
-                      <span className='text-lg'>
-                        {token} {`${sending ? '출금 중...' : '출금하기'}`}
-                      </span>
-                    </div>
-                  </button>
+                    >
+                      <div className='flex flex-row gap-2 items-center justify-center'>
+                        <Image
+                          src="/loading.png"
+                          alt="send"
+                          width={24}
+                          height={24}
+                          className={`
+                            ${sending ? 'animate-spin' : 'hidden'}
+                          `}
+                        />
+                        <span className='text-lg'>
+                          {token} {`${sending ? '출금 중...' : '출금하기'}`}
+                        </span>
+                      </div>
+                    </button>
 
 
-                </div>
+                  </div>
+
+                )}
 
                 {/* transfer history */}
                 {/* table view */}

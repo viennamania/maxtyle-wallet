@@ -135,6 +135,7 @@ const wallets = [
       ],
     },
   }),
+
   /*
   createWallet("com.coinbase.wallet"),
   createWallet("me.rainbow"),
