@@ -1008,17 +1008,19 @@ function AgentPage(
                         </Button>
                     </div>
 
-                    {loadingUsers ? (
-                        <div className="flex justify-center items-center py-4">
-                            <p className="text-gray-500">회원 목록을 불러오는 중...</p>
-                        </div>
-                    ) : (
+
+                    <div className="w-full flex justify-between items-center mb-4">
                         <div className="flex justify-between items-center py-4">
                             <p className="text-sm text-gray-500">
                                 총 {users.length}명의 회원이 있습니다.
                             </p>
                         </div>
-                    )}
+                        {loadingUsers && (
+                            <div className="flex justify-center items-center py-4">
+                                <p className="text-sm text-gray-500">회원 목록을 불러오는 중...</p>
+                            </div>
+                        )}
+                    </div>
 
                     <div className="overflow-x-auto">
                         <table className="min-w-full bg-white">
