@@ -189,7 +189,7 @@ function ChatPageContent() {
               max-w-2xl w-full">
               <div className="flex items-center justify-center mb-4">
                   <Image
-                      src="/icon-notice.webp"
+                      src="/icon-notice.png"
                       alt="Notice"
                       width={40}
                       height={40}
