@@ -226,6 +226,10 @@ export async function POST(request: NextRequest) {
   }
   */
 
+
+
+  let fromUser = null;
+
   let user_id = fromAddress;
 
   let url = `https://api-${process.env.SENDBIRD_APPLICATION_ID}.sendbird.com/v3/users/${user_id}?include_unread_count=true`;
@@ -254,11 +258,13 @@ export async function POST(request: NextRequest) {
    //   { error: 'Failed to fetch user' },
    //   { status: response.status }
    // );
+  } else {
+    fromUser = await response.json();
   }
 
-  const fromUser = await response.json();
 
 
+  let toUser = null;
 
   user_id = toAddress;
   url = `https://api-${process.env.SENDBIRD_APPLICATION_ID}.sendbird.com/v3/users/${user_id}?include_unread_count=true`;
@@ -284,11 +290,10 @@ export async function POST(request: NextRequest) {
     //  { error: 'Failed to fetch user' },
     //  { status: toResponse.status }
     //);
+  } else {
+    //console.log("toResponse", toResponse);
+    toUser = await toResponse.json();
   }
-
-  const toUser = await toResponse.json();
-
-
 
 
 
