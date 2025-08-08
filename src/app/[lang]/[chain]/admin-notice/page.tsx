@@ -285,6 +285,57 @@ const createNotice = async () => {
                     회원 목록
                 </Link>
             </div>
+
+                    <div className="flex flex-row gap-2 items-center
+                        border-b-2 border-blue-500 pb-2">
+                        <Image
+                            src="/token-mkc-icon.png"
+                            alt="MKC Icon"
+                            width={24}
+                            height={24}
+                        />
+                        <Link
+                            href={`/${lang}/${chain}/admin-send-token?token=MKC`}
+                            className="text-lg font-semibold text-gray-800 hover:text-blue-600"
+                        >
+                            MKC 출금
+                        </Link>
+                    </div>
+
+                    <div className="flex flex-row gap-2 items-center
+                        border-b-2 border-blue-500 pb-2">
+                        <Image
+                            src="/token-mkrw-icon.png"
+                            alt="MKRW Icon"
+                            width={24}
+                            height={24}
+                        />
+                        <Link
+                            href={`/${lang}/${chain}/admin-send-token?token=MKRW`}
+                            className="text-lg font-semibold text-gray-800 hover:text-blue-600"
+                        >
+                            MKRW 출금
+                        </Link>
+                    </div>
+
+                    <div className="flex flex-row gap-2 items-center
+                        border-b-2 border-blue-500 pb-2">
+                        <Image
+                            src="/token-musd-icon.png"
+                            alt="MUSD Icon"
+                            width={24}
+                            height={24}
+                        />
+                        <Link
+                            href={`/${lang}/${chain}/admin-send-token?token=MUSD`}
+                            className="text-lg font-semibold text-gray-800 hover:text-blue-600"
+                        >
+                            MUSD 출금
+                        </Link>
+
+                    </div>
+
+
         </div>
 
 

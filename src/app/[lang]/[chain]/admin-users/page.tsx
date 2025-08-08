@@ -998,9 +998,57 @@ function AgentPage(
                             회원 목록
                         </Link>
                     </div>
+
+                    <div className="flex flex-row gap-2 items-center
+                        border-b-2 border-blue-500 pb-2">
+                        <Image
+                            src="/token-mkc-icon.png"
+                            alt="MKC Icon"
+                            width={24}
+                            height={24}
+                        />
+                        <Link
+                            href={`/${lang}/${chain}/admin-send-token?token=MKC`}
+                            className="text-lg font-semibold text-gray-800 hover:text-blue-600"
+                        >
+                            MKC 출금
+                        </Link>
+                    </div>
+
+                    <div className="flex flex-row gap-2 items-center
+                        border-b-2 border-blue-500 pb-2">
+                        <Image
+                            src="/token-mkrw-icon.png"
+                            alt="MKRW Icon"
+                            width={24}
+                            height={24}
+                        />
+                        <Link
+                            href={`/${lang}/${chain}/admin-send-token?token=MKRW`}
+                            className="text-lg font-semibold text-gray-800 hover:text-blue-600"
+                        >
+                            MKRW 출금
+                        </Link>
+                    </div>
+
+                    <div className="flex flex-row gap-2 items-center
+                        border-b-2 border-blue-500 pb-2">
+                        <Image
+                            src="/token-musd-icon.png"
+                            alt="MUSD Icon"
+                            width={24}
+                            height={24}
+                        />
+                        <Link
+                            href={`/${lang}/${chain}/admin-send-token?token=MUSD`}
+                            className="text-lg font-semibold text-gray-800 hover:text-blue-600"
+                        >
+                            MUSD 출금
+                        </Link>
+
+                    </div>
+
                 </div>
-
-
 
 
 
@@ -1179,7 +1227,7 @@ function AgentPage(
                                             }}
                                             className="text-sm bg-green-500 text-white px-4 py-2 rounded"
                                         >
-                                            테더 송금하기
+                                            테더 보내기
                                         </Button>
 
                                         <Button
@@ -1190,7 +1238,7 @@ function AgentPage(
                                             }}
                                             className="text-sm bg-yellow-500 text-white px-4 py-2 rounded"
                                         >
-                                            포인트 송금하기
+                                            포인트 보내기
                                         </Button>
                                     </div>
 
@@ -1318,7 +1366,8 @@ function AgentPage(
 
 
 
-                    <div className="flex flex-row gap-2 mb-4">
+                    <div className="w-full flex flex-row gap-2 mb-4
+                        items-center justify-end">
                         <Image
                             src="/icon-search.png"
                             alt="Search Icon"
@@ -1331,7 +1380,7 @@ function AgentPage(
                             placeholder="회원 검색 (닉네임)"
                             value={searchNickname}
                             onChange={(e) => setSearchNickname(e.target.value)}
-                            className="w-full p-2 border border-gray-300 rounded-lg"
+                            className="w-40 p-2 border border-gray-300 rounded-lg"
                         />
                         <Button
                             onClick={() => {
@@ -1384,8 +1433,13 @@ function AgentPage(
                                         MUSD 잔액
                                     </th>
                                     <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        행동
+                                        내 지갑에서 회원에게 토큰 보내기
                                     </th>
+
+                                    <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        회원 지갑 출금 차단 및 해제
+                                    </th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -1428,18 +1482,20 @@ function AgentPage(
                                             Number(user.mkcBalance).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") // format number with commas
                                             }
                                         </td>
+
                                         <td className="px-6 py-4 whitespace-nowrap text-right text-lg text-yellow-600"
                                             style={{ fontFamily: 'monospace' }}
                                         >
                                             {Number(user.mkrwBalance).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                         </td>
+
                                         <td className="px-6 py-4 whitespace-nowrap text-right text-lg text-green-600"
                                             style={{ fontFamily: 'monospace' }}
                                         >
                                             {Number(user.musdBalance).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                         </td>
 
-                                        <td className="px-6 py-4 flex flex-row gap-2 items-center justify-center">
+                                        <td className="px-6 py-4 whitespace-nowrap text-center">
 
                                             <Button
                                                 onClick={() => {
@@ -1449,7 +1505,7 @@ function AgentPage(
                                                 }}
                                                 className="text-sm bg-yellow-500 text-white px-4 py-2 rounded ml-2"
                                             >
-                                                MKC 송금하기
+                                                MKC 보내기
                                             </Button>
 
                                             <Button
@@ -1460,7 +1516,7 @@ function AgentPage(
                                                 }}
                                                 className="text-sm bg-green-500 text-white px-4 py-2 rounded ml-2"
                                             >
-                                                MKRW 송금하기
+                                                MKRW 보내기
                                             </Button>
 
                                             <Button
@@ -1471,14 +1527,16 @@ function AgentPage(
                                                 }}
                                                 className="text-sm bg-blue-500 text-white px-4 py-2 rounded ml-2"
                                             >
-                                                MUSD 송금하기
+                                                MUSD 보내기
                                             </Button>
+ 
 
+                                        </td>
 
-                                            {/* 출금 차단 */}
-                                            <div className="flex flex-row gap-2
-                                                items-center justify-center
-                                                border-l border-gray-200 pl-4">
+                                        <td className="px-6 py-4 whitespace-nowrap text-center">
+
+                    
+                                           {/* 출금 차단 */}
                                                 {/* 차단상태 */}
                                                 {user?.isBlocked ? (
                                                     <div className="flex flex-row gap-2 items-center">
@@ -1523,9 +1581,9 @@ function AgentPage(
                                                         </Button>
                                                     </div>
                                                 )}
-                                            </div>
-
                                         </td>
+
+
                                     </tr>
                                 ))}
                             </tbody>
