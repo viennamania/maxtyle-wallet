@@ -673,34 +673,7 @@ function AgentPage(
     */
 
     // // /api/snowball/getAgentNFTByWalletAddress
-    useEffect(() => {
-        const fetchOwnedNFTs = async () => {
 
-            setLoadingOwnedNfts(true);
-            const response = await fetch("/api/snowball/getAgentNFTByWalletAddress", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    walletAddress: address,
-                }),
-            });
-            const data = await response.json();
-            //console.log("data", data);
-            if (data.result) {
-                setOwnedNfts(data.result.ownedNfts);
-            } else {
-                setOwnedNfts([]);
-            }
-            setLoadingOwnedNfts(false);
-
-        };
-
-        if (address) {
-            fetchOwnedNFTs();
-        }
-    }, [address]);
 
 
     //console.log("ownedNfts", ownedNfts);

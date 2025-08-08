@@ -799,68 +799,6 @@ function IndexPage(
   const [ownedNfts, setOwnedNfts] = useState([] as any[]);
   const [loadingOwnedNfts, setLoadingOwnedNfts] = useState(false);
 
-  useEffect(() => {
-
-      /*
-      const fetchOwnedNFTs = async () => {
-
-          setLoadingOwnedNfts(true);
-
-          const nfts = await getOwnedNFTs({
-              contract: contractErc1155,
-              start: 0,
-              count: 10,
-              address: address as string,
-          });
-
-
-          console.log("nfts", nfts);
-
-          setOwnedNfts(nfts);
-          setLoadingOwnedNfts(false);
-
-      };
-
-      if (address && contractErc1155) {
-          fetchOwnedNFTs();
-      }
-      */
-
-      // /api/snowball/getAgentNFTByWalletAddress
-      
-      const fetchOwnedNFTs = async () => {
-
-          setLoadingOwnedNfts(true);
-
-          const response = await fetch("/api/snowball/getAgentNFTByWalletAddress", {
-              method: "POST",
-              headers: {
-                  "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                  walletAddress: address,
-              }),
-          });
-
-          const data = await response.json();
-
-          //console.log("data", data);
-
-          if (data.result) {
-              setOwnedNfts(data.result.ownedNfts);
-          }
-
-          setLoadingOwnedNfts(false);
-
-      };
-
-      if (address) {
-          fetchOwnedNFTs();
-      }
-
-
-
-  }, [address]);
 
 
 
@@ -897,7 +835,30 @@ function IndexPage(
 
 
 
-  {/* bg R:231, G:237, B:241 */}
+  const [noticeList, setNoticeList] = useState<any[]>([]);
+  const [loadingNotices, setLoadingNotices] = useState(true);
+  useEffect(() => {
+    const fetchNotices = async () => {
+      try {
+        setLoadingNotices(true);
+        const response = await fetch("/api/notice/getNotices");
+        const data = await response.json();
+        if (data.success) {
+          setNoticeList(data.notices);
+        } else {
+          console.error("Failed to fetch notices:", data.message);
+        }
+      } catch (error) {
+        console.error("Error fetching notices:", error);
+      } finally {
+          setLoadingNotices(false);
+      }
+    };
+    fetchNotices();
+  }, []);
+
+
+
 
   return (
 
@@ -1038,6 +999,7 @@ function IndexPage(
           
           <div className="flex flex-row justify-between items-center">
             
+            {/*
             <div className="flex flex-row justify-start items-center gap-2">
               <Image
                   src="/icon-notice.png"
@@ -1050,6 +1012,9 @@ function IndexPage(
                 [공지] 지갑서비스를 오픈하였습니다.
               </span>
             </div>
+
+
+
             <button
               onClick={() => {
                 router.push(
@@ -1060,6 +1025,39 @@ function IndexPage(
             >
               자세히 보기
             </button>
+            */}
+            {/* first notice */}
+            {loadingNotices && (
+              <span className="text-sm text-zinc-500">
+                공지사항을 불러오는 중...
+              </span>
+            )}
+            {noticeList.length > 0 && (
+              <div className="w-full flex flex-row justify-start items-center gap-2">
+                <Image
+                  src="/icon-notice.png"
+                  alt="Notice"
+                  width={40}
+                  height={40}
+                  className="rounded-full w-8 h-8 mr-2"
+                />
+                <div className="w-full flex flex-row justify-end items-center gap-2">
+                  <span className="text-sm text-zinc-800">
+                    {noticeList[0].title}
+                  </span>
+                  <button
+                    onClick={() => {
+                      router.push(
+                        "/" + params.lang + "/" + params.chain + "/notice"
+                      );
+                    }}
+                    className="text-sm border-b-2 border-blue-500 text-blue-500 hover:bg-blue-100 px-2 rounded"
+                  >
+                    자세히 보기
+                  </button>
+                </div>
+              </div>
+            )}
 
           </div>
 

@@ -150,6 +150,28 @@ function ChatPageContent() {
 
 
 
+  const [noticeList, setNoticeList] = useState<any[]>([]);
+  const [loadingNotices, setLoadingNotices] = useState(true);
+  useEffect(() => {
+    const fetchNotices = async () => {
+      try {
+        setLoadingNotices(true);
+        const response = await fetch("/api/notice/getNotices");
+        const data = await response.json();
+        if (data.success) {
+          setNoticeList(data.notices);
+        } else {
+          console.error("Failed to fetch notices:", data.message);
+        }
+      } catch (error) {
+        console.error("Error fetching notices:", error);
+      } finally {
+          setLoadingNotices(false);
+      }
+    };
+    fetchNotices();
+  }, []);
+
 
 
 
@@ -179,49 +201,57 @@ function ChatPageContent() {
           </div>
 
 
-          {/* [공지] 지갑서비스를 오픈하였습니다. */}
-          {/* 안녕하세요 지갑서스를 오픈하였습니다. */}
-          {/* 제목 */}
-          {/* 본문 */}
-          <div className="flex flex-col items-center justify-center
-              bg-white p-6 rounded-lg shadow-md
-              border border-gray-200
-              max-w-2xl w-full">
-              <div className="flex items-center justify-center mb-4">
+
+          {/* nitice list */}
+          <div className="w-full flex flex-col items-start justify-start gap-4">
+              <div className="flex items-center justify-center gap-2">
                   <Image
                       src="/icon-notice.png"
                       alt="Notice"
-                      width={40}
-                      height={40}
-                      className="rounded-full w-8 h-8 mr-2"
+                      width={24}
+                      height={24}
+                      className="rounded-full"
                   />
-                  <span className="text-gray-800 font-bold">
-                    [공지] 지갑서비스를 오픈하였습니다.
-                  </span>
+                  <h2 className="text-lg font-semibold">공지사항</h2>
               </div>
-              <p className="text-gray-600 text-sm text-left">
-                  안녕하세요 지갑서비스를 오픈하였습니다. 이제부터 지갑서비스를 이용하실 수 있습니다.
-                  <br />
-                  지갑서비스를 이용하시려면 아래의 절차를 따라주세요.
-              </p>
-              <p className="text-gray-600 mt-4 text-sm text-left">
-                  
-                  1. 지갑 생성
-                  <br />
-                  2. 지갑 주소 확인
-                  <br />
-                  3. 지갑 주소로 토큰 전송
-                  <br />
-                  4. 지갑 주소로 토큰 수신
-                  <br />
-                  5. 지갑 주소로 토큰 잔액 확인
-                  <br />
-                  6. 지갑 주소로 토큰 전송 기록 확인
-              </p>
+
+              <div className="w-full flex flex-col items-start justify-start gap-2">
+                  {loadingNotices ? (
+                      <div className="w-full flex items-center justify-center">
+                          <span className="text-sm text-gray-500">
+                              공지사항을 불러오는 중...
+                          </span>
+                      </div>
+                  ) : (
+                      noticeList.map((notice) => (
+                          <div key={notice.id} className="w-full flex flex-col items-start justify-start gap-2
+                              p-4 border rounded-lg shadow-sm bg-white">
+
+                              <h3 className="text-md font-semibold">{notice.title}</h3>
+                              <p className="text-sm text-gray-500">
+                                { // process returnd characters to <br /> tags
+                                  notice.content.split('\n').map((line: string, index: number) => (
+                                    <span key={index}>
+                                      {line}
+                                      <br />
+                                    </span>
+                                  ))
+                                } 
+                              </p>
+                              <span className="text-xs text-gray-400">
+                                  {new Date(notice.createdAt).toLocaleDateString()}
+                              </span>
+                          </div>
+                      ))
+                  )}
+              </div>
           </div>
 
 
       </div>
+
+
+
 
     </main>
 
