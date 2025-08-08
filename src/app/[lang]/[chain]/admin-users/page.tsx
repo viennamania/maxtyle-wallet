@@ -79,6 +79,7 @@ import {
 } from "@/app/config/contractAddresses";
 
 
+import { useQRCode } from 'next-qrcode';
 
 
 const wallets = [
@@ -188,6 +189,7 @@ function AgentPage(
   
 
 
+    const { Canvas } = useQRCode();
 
 
 
@@ -1429,16 +1431,7 @@ function AgentPage(
                 {/* table view */}
                 <div className="w-full mb-5">
                     
-                    <div className="flex items-center gap-2 mb-4
-                        border-b-2 border-gray-200 pb-2">
-                        <Image
-                            src="/icon-invite.png"
-                            alt="Invite Icon"
-                            width={24}
-                            height={24}
-                        />
-                        <h2 className="text-xl font-bold">회원 목록</h2>
-                    </div>
+
 
 
 
@@ -1451,18 +1444,47 @@ function AgentPage(
 
                             {/* 내 지갑 주소 */}
                             <div className="flex flex-col items-start mr-8">
-                                <h3 className="text-lg font-semibold mb-2">내 지갑 주소</h3>
-                                <div className="flex items-center gap-2 mb-4">
-                                    <Image
-                                        src="/icon-shield.png"
-                                        alt="Shield Icon"
-                                        width={24}
-                                        height={24}
-                                    />
-                                    <span className="text-sm text-gray-600">
-                                        {address.length > 10 ? address.slice(0, 10) + '...' : address}
-                                    </span>
+
+                                <div className="flex flex-row items-center gap-2">
+
+                                    <h3 className="text-lg font-semibold mb-2">내 회원아이디</h3>
+
                                 </div>
+                                <div className="flex flex-row items-center gap-2 mb-4">
+                                    <h3 className="text-lg font-semibold">내 지갑 주소</h3>
+                                    <div className="flex items-center gap-2">
+                                        <Image
+                                            src="/icon-shield.png"
+                                            alt="Shield Icon"
+                                            width={24}
+                                            height={24}
+                                        />
+                                        <span className="text-sm text-gray-600">
+                                            {address.length > 10 ? address.slice(0, 10) + '...' : address}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                {/* QR Code */}
+
+                                <Canvas
+                                    text={address}
+                                    options={{
+                                        //level: 'M',
+                                        margin: 2,
+                                        scale: 4,
+                                        ///width: 200,
+                                        // width 100%
+                                        width: 100,
+                                        color: {
+                                            dark: '#000000FF',
+                                            light: '#FFFFFFFF',
+                                        },
+                        
+                                    }}
+                                />
+
+
                             </div>
 
                             {/* 잔액 표시 */}
@@ -1511,7 +1533,18 @@ function AgentPage(
                         </div>
                     )}
 
+                    
 
+                    <div className="mt-10 flex items-center gap-2 mb-4
+                        border-b-2 border-gray-200 pb-2">
+                        <Image
+                            src="/icon-invite.png"
+                            alt="Invite Icon"
+                            width={24}
+                            height={24}
+                        />
+                        <h2 className="text-xl font-bold">회원 목록</h2>
+                    </div>
 
 
 
