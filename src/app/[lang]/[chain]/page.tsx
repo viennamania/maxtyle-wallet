@@ -1364,6 +1364,34 @@ function IndexPage(
                 </span>
 
 
+              {/* 환율 */}
+              <div className="mt-2 p-2
+              w-full flex flex-row gap-2 items-center justify-between
+              ">
+                <Image
+                  src="/icon-foreign-exchange.png"
+                  alt="Exchange Rate"
+                  width={20}
+                  height={20}
+                  className="rounded-full w-8 h-8 xl:w-10 xl:h-10"
+                />
+                <div className="w-36 flex flex-col gap-2 items-start justify-start">
+                  <span className="text-sm md:text-lg text-zinc-600 underline">
+                    1 MKC = {Number(mkcRate).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} 원
+                  </span>
+                  <span className="text-sm md:text-lg text-zinc-600 underline">
+                    1 MKRW = 1 원
+                  </span>
+                  <span className="text-sm md:text-lg text-zinc-600 underline">
+                    1 MUSD = {Number(musdRate).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} 원
+                  </span>
+                </div>
+              </div>
+
+
+
+
+
             </div>
 
           </div>
@@ -1414,7 +1442,8 @@ function IndexPage(
 
 
                   {/* floating point number to fixed 5 and text size small */}
-                <div className="w-full text-2xl font-bold text-zinc-800 text-right">
+                <div className="w-full flex flex-row gap-2 items-center justify-end
+                  text-2xl font-bold text-zinc-800 text-right">
                   {
                     Number(mkcBalance)
                     .toFixed(2)
@@ -1431,13 +1460,13 @@ function IndexPage(
                       "/" + params.lang + "/" + params.chain + "/send-token/?token=MKC"
                     );
                   }}
-                  className="w-10 h-10"
+                  className="w-16 h-16 xl:w-20 xl:h-20 flex items-center justify-center ml-2"
                 >
                   <Image
                     src="/goto-icon.webp"
                     alt="Send"
-                    width={20}
-                    height={20}
+                    width={50}
+                    height={50}
                   />
                 </button>
               </div>
@@ -1497,13 +1526,13 @@ function IndexPage(
                         "/" + params.lang + "/" + params.chain + "/send-token/?token=MKRW"
                       );
                     }}
-                    className="w-10 h-10"
+                    className="w-16 h-16 xl:w-20 xl:h-20 flex items-center justify-center ml-2"
                   >
                     <Image
                       src="/goto-icon.webp"
                       alt="Send"
-                      width={20}
-                      height={20}
+                      width={50}
+                      height={50}
                     />
                   </button>
                 </div>
@@ -1540,13 +1569,13 @@ function IndexPage(
                         "/" + params.lang + "/" + params.chain + "/send-token/?token=MUSD"
                       );
                     }}
-                    className="w-10 h-10"
+                    className="w-16 h-16 xl:w-20 xl:h-20 flex items-center justify-center ml-2"
                   >
                     <Image
                       src="/goto-icon.webp"
                       alt="Send"
-                      width={20}
-                      height={20}
+                      width={50}
+                      height={50}
                     />
                   </button>
                 </div>
