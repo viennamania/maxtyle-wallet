@@ -300,59 +300,6 @@ function HomeContent() {
 
 
 
-      // get usdt balance
-      const fetchUserBalanceUsdt = async () => {
-
-        if (!selectUser) {
-          return;
-        }
-
-        const result1 = await balanceOf({
-          contract,
-          address: selectUser,
-        });
-
-        setUserBalanceUsdt( Number(result1) / 10 ** 18 );
-
-      }
-
-
-      // get KCT balance
-      const fetchUserBalanceKCT = async () => {
-
-        if (!selectUser) {
-          return;
-        }
-
-        const result2 = await balanceOf({
-          contract: contractKCT,
-          address: selectUser,
-        });
-
-        setUserBalanceKCT( Number(result2) / 10 ** 18 );
-
-      }
-
-
-
-
-
-      if (selectUser) {
-
-        fetchNfts();
-
-        fetchNoahNfts();
-
-        //fetchApplication();
-
-        fetchUserBalanceUsdt();
-        fetchUserBalanceKCT();
-
-      }
-
-  }, [selectUser]);
-
-
 
 
   // getAllUsersTelegramIdByCenter
