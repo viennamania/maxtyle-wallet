@@ -963,12 +963,12 @@ function AgentPage(
 
                     <div className="mt-20
                     flex flex-row gap-2 justify-center items-center">
-                    <span className="text-sm md:text-lg text-zinc-500">
+                    <span className="text-sm md:text-lg text-zinc-600">
                         이용방법이 궁금하신가요?
                     </span>
                     <Link
                         href="#"
-                        className="text-sm md:text-lg text-blue-500 font-semibold hover:underline"
+                        className="text-sm md:text-lg text-blue-600 font-semibold hover:underline"
                     >
                         이용가이드
                     </Link>
@@ -985,7 +985,7 @@ function AgentPage(
                 {/* 메뉴: 공지사항, 회원목록 */}
                 <div className="w-full flex flex-row gap-4 items-start justify-start mb-5">
                     <div className="flex flex-row gap-2 items-center
-                        border-b-2 border-blue-500 pb-2">
+                        border-b-2 border-blue-600 pb-2">
                         <Image
                             src="/icon-notice.png"
                             alt="Notice Icon"
@@ -1001,7 +1001,7 @@ function AgentPage(
                     </div>
 
                     <div className="flex flex-row gap-2 items-center
-                        border-b-2 border-blue-500 pb-2">
+                        border-b-2 border-blue-600 pb-2">
                         <Image
                             src="/icon-invite.png"
                             alt="Users Icon"
@@ -1017,7 +1017,7 @@ function AgentPage(
                     </div>
 
                     <div className="flex flex-row gap-2 items-center
-                        border-b-2 border-blue-500 pb-2">
+                        border-b-2 border-blue-600 pb-2">
                         <Image
                             src="/token-mkc-icon.png"
                             alt="MKC Icon"
@@ -1033,7 +1033,7 @@ function AgentPage(
                     </div>
 
                     <div className="flex flex-row gap-2 items-center
-                        border-b-2 border-blue-500 pb-2">
+                        border-b-2 border-blue-600 pb-2">
                         <Image
                             src="/token-mkrw-icon.png"
                             alt="MKRW Icon"
@@ -1049,7 +1049,7 @@ function AgentPage(
                     </div>
 
                     <div className="flex flex-row gap-2 items-center
-                        border-b-2 border-blue-500 pb-2">
+                        border-b-2 border-blue-600 pb-2">
                         <Image
                             src="/token-musd-icon.png"
                             alt="MUSD Icon"
@@ -1128,7 +1128,7 @@ function AgentPage(
                                         "_blank"
                                     );
                                 }}
-                                className="text-sm bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-200"
+                                className="text-sm bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-200"
                             >
                                 BscScan에서 확인하기
                             </Button>
@@ -1148,7 +1148,7 @@ function AgentPage(
                             <span className="text-lg md:text-xl font-semibold">
                                 MKRW 총 유통량:
                             </span>
-                            <span className="text-xl md:text-2xl font-semibold text-blue-600 ml-2"
+                            <span className="text-xl md:text-2xl font-semibold text-yellow-600 ml-2"
                                 style={{ fontFamily: 'monospace' }}>
                                 {totalSupplyMKRW.toLocaleString()}
                             </span>
@@ -1194,7 +1194,7 @@ function AgentPage(
                                         "_blank"
                                     );
                                 }}
-                                className="text-sm bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-200"
+                                className="text-sm bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-200"
                             >
                                 BscScan에서 확인하기
                             </Button>
@@ -1214,7 +1214,7 @@ function AgentPage(
                             <span className="text-lg md:text-xl font-semibold">
                                 MUSD 총 유통량:
                             </span>
-                            <span className="text-xl md:text-2xl font-semibold text-blue-600 ml-2"
+                            <span className="text-xl md:text-2xl font-semibold text-green-600 ml-2"
                                 style={{ fontFamily: 'monospace' }}>
                                 {totalSupplyMUSD.toLocaleString()}
                             </span>
@@ -1260,7 +1260,7 @@ function AgentPage(
                                         "_blank"
                                     );
                                 }}
-                                className="text-sm bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-200"
+                                className="text-sm bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-200"
                             >
                                 BscScan에서 확인하기
                             </Button>
@@ -1310,7 +1310,7 @@ function AgentPage(
                                 getSendbirdUsers();
                             }}
                             className={`
-                                ${searchNickname ? "bg-blue-500 text-white" : "bg-gray-300 text-gray-700"}
+                                ${searchNickname ? "bg-blue-600 text-white" : "bg-gray-300 text-gray-700"}
                                 w-32  flex-shrink-0
                                 hover:bg-blue-600 hover:text-white
                                 px-4 py-2 rounded-lg
@@ -1326,7 +1326,7 @@ function AgentPage(
 
                     { loadingSendbirdUsers && (
                         <div className="flex justify-center items-center py-4">
-                            <p className="text-gray-500">회원 목록을 불러오는 중...</p>
+                            <p className="text-gray-600">회원 목록을 불러오는 중...</p>
                         </div>
                     )}
 
@@ -1352,7 +1352,7 @@ function AgentPage(
                                         <div>
                                             <h3 className="text-lg font-semibold">{user.nickname}</h3>
                                             <p className="text-sm text-gray-600">회원 지갑: {user.user_id.length > 10 ? user.user_id.slice(0, 10) + '...' : user.user_id}</p>
-                                            <p className="text-sm text-gray-500">온라인: {user.is_online ? "예" : "아니오"}</p>
+                                            <p className="text-sm text-gray-600">온라인: {user.is_online ? "예" : "아니오"}</p>
                                         </div>
                                     </div>
 
@@ -1364,7 +1364,7 @@ function AgentPage(
                                                 alert('준비중입니다."');
 
                                             }}
-                                            className="text-sm bg-blue-500 text-white px-4 py-2 rounded"
+                                            className="text-sm bg-blue-600 text-white px-4 py-2 rounded"
                                         >
                                             채팅하기
                                         </Button>
@@ -1374,7 +1374,7 @@ function AgentPage(
                                                     "/" + params.lang + "/" + params.chain + "/sendToUserUSDT/" + user.user_id
                                                 );
                                             }}
-                                            className="text-sm bg-green-500 text-white px-4 py-2 rounded"
+                                            className="text-sm bg-green-600 text-white px-4 py-2 rounded"
                                         >
                                             테더 보내기
                                         </Button>
@@ -1385,7 +1385,7 @@ function AgentPage(
                                                     "/" + params.lang + "/" + params.chain + "/sendToUserMKRW/" + user.user_id
                                                 );
                                             }}
-                                            className="text-sm bg-yellow-500 text-white px-4 py-2 rounded"
+                                            className="text-sm bg-yellow-600 text-white px-4 py-2 rounded"
                                         >
                                             포인트 보내기
                                         </Button>
@@ -1404,7 +1404,7 @@ function AgentPage(
 
                             {loadingSendbirdUsers && (
                                 <div className="flex justify-center items-center py-4">
-                                    <p className="text-gray-500">더 많은 회원을 불러오는 중...</p>
+                                    <p className="text-gray-600">더 많은 회원을 불러오는 중...</p>
                                 </div>
                             )}
 
@@ -1413,7 +1413,7 @@ function AgentPage(
 
                                 <Button
                                     onClick={getSendbirdUsers}
-                                    className="w-full mt-4 bg-blue-500 text-white px-4 py-2 rounded"
+                                    className="w-full mt-4 bg-blue-600 text-white px-4 py-2 rounded"
                                 >
                                     더 불러오기
                                 </Button>
@@ -1537,7 +1537,7 @@ function AgentPage(
                                 getUsers();
                             }}
                             className={`
-                                ${searchNickname ? "bg-blue-500 text-white" : "bg-gray-300 text-gray-700"}
+                                ${searchNickname ? "bg-blue-600 text-white" : "bg-gray-300 text-gray-700"}
                                 w-32  flex-shrink-0
                                 hover:bg-blue-600 hover:text-white
                                 px-4 py-2 rounded-lg
@@ -1551,13 +1551,13 @@ function AgentPage(
 
                     <div className="w-full flex justify-between items-center mb-4">
                         <div className="flex justify-between items-center py-4">
-                            <p className="text-sm text-gray-500">
+                            <p className="text-sm text-gray-600">
                                 총 {users.length}명의 회원이 있습니다.
                             </p>
                         </div>
                         {loadingUsers && (
                             <div className="flex justify-center items-center py-4">
-                                <p className="text-sm text-gray-500">회원 목록을 불러오는 중...</p>
+                                <p className="text-sm text-gray-600">회원 목록을 불러오는 중...</p>
                             </div>
                         )}
                     </div>
@@ -1566,26 +1566,26 @@ function AgentPage(
                         <table className="min-w-full bg-white">
                             <thead>
                                 <tr className="border-b">
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
                                         닉네임
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
                                         지갑 주소
                                     </th>
-                                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-600 uppercase tracking-wider">
                                         MKC 잔액
                                     </th>
-                                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-600 uppercase tracking-wider">
                                         MKRW 잔액
                                     </th>
-                                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-600 uppercase tracking-wider">
                                         MUSD 잔액
                                     </th>
-                                    <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-center text-xs font-medium text-gray-600 uppercase tracking-wider">
                                         내 지갑에서 회원에게 토큰 보내기
                                     </th>
 
-                                    <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-center text-xs font-medium text-gray-600 uppercase tracking-wider">
                                         회원 지갑 출금 차단 및 해제
                                     </th>
 
@@ -1652,7 +1652,7 @@ function AgentPage(
                                                         "/" + params.lang + "/" + params.chain + "/sendToUserMKC/" + user.walletAddress
                                                     );
                                                 }}
-                                                className="text-sm bg-yellow-500 text-white px-4 py-2 rounded ml-2"
+                                                className="text-sm bg-blue-600 text-white px-4 py-2 rounded ml-2"
                                             >
                                                 MKC 보내기
                                             </Button>
@@ -1663,7 +1663,7 @@ function AgentPage(
                                                         "/" + params.lang + "/" + params.chain + "/sendToUserMKRW/" + user.walletAddress
                                                     );
                                                 }}
-                                                className="text-sm bg-green-500 text-white px-4 py-2 rounded ml-2"
+                                                className="text-sm bg-yellow-600 text-white px-4 py-2 rounded ml-2"
                                             >
                                                 MKRW 보내기
                                             </Button>
@@ -1674,7 +1674,7 @@ function AgentPage(
                                                         "/" + params.lang + "/" + params.chain + "/sendToUserMUSD/" + user.walletAddress
                                                     );
                                                 }}
-                                                className="text-sm bg-blue-500 text-white px-4 py-2 rounded ml-2"
+                                                className="text-sm bg-green-600 text-white px-4 py-2 rounded ml-2"
                                             >
                                                 MUSD 보내기
                                             </Button>
@@ -1690,7 +1690,7 @@ function AgentPage(
                                                 {user?.isBlocked ? (
                                                     <div className="flex flex-row gap-2 items-center">
                                                         {/* 포인트 출금 차단 상태 */}
-                                                        <span className="text-sm text-red-500">
+                                                        <span className="text-sm text-red-600">
                                                             출금 차단됨
                                                         </span>
                                                         {/* 포인트 출금 차단 해제 버튼 */}
@@ -1702,7 +1702,7 @@ function AgentPage(
                                                                 // call function to unblock user
                                                                 updateUserBlockStatus(user.walletAddress, false);
                                                             }}
-                                                            className={`text-sm bg-red-500 text-white px-4 py-2 rounded
+                                                            className={`text-sm bg-red-600 text-white px-4 py-2 rounded
                                                                 ${loadingUpdateUserBlockStatus.some((item) => item.userId === user.walletAddress) ? 'opacity-50 cursor-not-allowed' : ''}`}
                                                         >
                                                             {loadingUpdateUserBlockStatus.some((item) => item.userId === user.walletAddress) ? '처리중...' : '출금 차단 해제'}
@@ -1711,7 +1711,7 @@ function AgentPage(
                                                 ) : (
                                                     <div className="flex flex-row gap-2 items-center">
                                                         {/* 포인트 출금 가능 상태 */}
-                                                        <span className="text-sm text-green-500">
+                                                        <span className="text-sm text-green-600">
                                                             출금 가능
                                                         </span>
                                                         {/* 포인트 출금 차단 버튼 */}
@@ -1723,7 +1723,7 @@ function AgentPage(
                                                                 // call function to block user
                                                                 updateUserBlockStatus(user.walletAddress, true);
                                                             }}
-                                                            className={`text-sm bg-gray-500 text-white px-4 py-2 rounded
+                                                            className={`text-sm bg-gray-600 text-white px-4 py-2 rounded
                                                                 ${loadingUpdateUserBlockStatus.some((item) => item.userId === user.walletAddress) ? 'opacity-50 cursor-not-allowed' : ''}`}
                                                         >
                                                             {loadingUpdateUserBlockStatus.some((item) => item.userId === user.walletAddress) ? '처리중...' : '출금 차단'}
@@ -1740,7 +1740,7 @@ function AgentPage(
 
                         {/*}
                         <div className="flex justify-between items-center py-4">
-                            <div className="text-sm text-gray-500">
+                            <div className="text-sm text-gray-600">
                                 총 {users.length}명의 회원이 있습니다.
                             </div>
                             <Pagination
@@ -1755,7 +1755,7 @@ function AgentPage(
 
                     {users.length === 0 && !loadingUsers && (
                         <div className="flex justify-center items-center py-4">
-                            <p className="text-gray-500">회원이 없습니다.</p>
+                            <p className="text-gray-600">회원이 없습니다.</p>
                         </div>
                     )}
 
@@ -1784,12 +1784,12 @@ function AgentPage(
 
                     <div className="
                     flex flex-row gap-2 justify-center items-center">
-                    <span className="text-sm md:text-lg text-zinc-500">
+                    <span className="text-sm md:text-lg text-zinc-600">
                         계속하면 이용약관에 동의하는것입니다.
                     </span>
                     <Link
                         href="#"
-                        className="text-sm md:text-lg text-blue-500 font-semibold hover:underline"
+                        className="text-sm md:text-lg text-blue-600 font-semibold hover:underline"
                     >
                         이용약관
                     </Link>
@@ -1797,12 +1797,12 @@ function AgentPage(
 
                     <div className="
                     flex flex-row gap-2 justify-center items-center">
-                    <span className="text-sm md:text-lg text-zinc-500">
+                    <span className="text-sm md:text-lg text-zinc-600">
                         개인정보 처리방침을 확인하세요.
                     </span>
                     <Link
                         href="#"
-                        className="text-sm md:text-lg text-blue-500 font-semibold hover:underline"
+                        className="text-sm md:text-lg text-blue-600 font-semibold hover:underline"
                     >
                         개인정보 처리방침
                     </Link>
