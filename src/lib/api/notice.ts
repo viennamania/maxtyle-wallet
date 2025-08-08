@@ -108,6 +108,8 @@ export async function updateNotice(objectId: string, data: any) {
 
 
 
+
+
 // deleteNoticeById
 export async function deleteNoticeById(objectId: string) {
     if (!objectId) {
