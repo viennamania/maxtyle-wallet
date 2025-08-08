@@ -52,7 +52,10 @@ import Image from 'next/image';
 
 //import Uploader from '@/components/uploader';
 
-import { balanceOf } from "thirdweb/extensions/erc20";
+import {
+    balanceOf,
+    totalSupply,
+} from "thirdweb/extensions/erc20";
 
 
 
@@ -191,7 +194,7 @@ function AgentPage(
 
 
 
-
+    const [totalSupplyMKC, setTotalSupplyMKC] = useState(0);
     const [balanceMKC, setBalanceMKC] = useState(0);
     useEffect(() => {
   
@@ -217,14 +220,24 @@ function AgentPage(
 
         setBalanceMKC( Number(result) / 10 ** 18 ); // assuming USDT has 18 decimals
 
+        // get total supply
+        const totalSupplyResult = await totalSupply({
+          contract: contractMKC,
+        });
+        //console.log("totalSupplyResult", totalSupplyResult);
+        if (!totalSupplyResult) return;
+        setTotalSupplyMKC( Number(totalSupplyResult) / 10 ** 18 ); // assuming MKC has 18 decimals
+
       };
 
       if (address) getBalanceMKC();
         const interval = setInterval(() => {
             if (address) getBalanceMKC();
-        } , 1000);
+        } , 5000);
         return () => clearInterval(interval);
     }, [address, contractMKC]);
+
+
 
 
     const [balanceMKRW, setBalanceMKRW] = useState(0);
@@ -257,9 +270,11 @@ function AgentPage(
       if (address) getBalanceMKRW();
         const interval = setInterval(() => {
             if (address) getBalanceMKRW();
-        } , 1000);
+        } , 5000);
         return () => clearInterval(interval);
     }, [address, contractMKRW]);
+
+
 
     const [balanceMUSD, setBalanceMUSD] = useState(0);
     useEffect(() => {
@@ -291,7 +306,7 @@ function AgentPage(
       if (address) getBalanceMUSD();
         const interval = setInterval(() => {
             if (address) getBalanceMUSD();
-        } , 1000);
+        } , 5000);
         return () => clearInterval(interval);
     }, [address, contractMUSD]);
 
@@ -984,6 +999,79 @@ function AgentPage(
                         </Link>
                     </div>
                 </div>
+
+
+
+
+
+                <div className="flex flex-col items-center justify-center w-full mb-5">
+
+                    <div className="flex flex-row gap-2 items-center">                    
+                        <Image
+                            src="/token-mkc-icon.png"
+                            alt="MKC Icon"
+                            width={40}
+                            height={40}
+                            className="inline-block mr-2"
+                        />
+                        <span className="text-lg md:text-xl font-semibold">
+                            MKC 총 유통량:
+                        </span>
+                        <span className="text-xl md:text-2xl font-semibold text-blue-600 ml-2"
+                            style={{ fontFamily: 'monospace' }}>
+                            {totalSupplyMKC.toLocaleString()}
+                        </span>
+                    </div>
+
+                    {/* mint history */}
+                    {/* background is transparent */}
+                    {/*
+                    <div className="flex flex-col items-start gap-2 mb-4
+                        bg-black/50
+                        text-white
+                        backdrop-filter backdrop-blur-md
+                        rounded-lg shadow-md
+                        p-4 mt-4">
+                        {mintHistory.map((mint, index) => (
+                            <div key={index} className="flex flex-row items-center justify-between
+                                gap-4">
+                                <div className="flex flex-row items-center gap-2">
+                                    <span className="text-sm">
+                                        {mint.toUser.nickname || "익명"}
+                                    </span>
+                                    <span className="text-xs">
+                                        {new Date(mint.transferData.timestamp).toLocaleString()}
+                                    </span>
+                                </div>
+                                <span className="text-lg font-semibold text-yellow-400">
+                                    {Number(
+                                        mint.transferData.value / 10 ** 18
+                                    ).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                </span>
+                            </div>
+                        ))}
+                    </div>
+                    */}
+
+
+                    {/* bscscan link */}
+                    <div className="mt-2">
+                        <Button
+                            onClick={() => {
+                                window.open(
+                                    `https://bscscan.com/token/${contractAddressMKC}`,
+                                    "_blank"
+                                );
+                            }}
+                            className="text-sm bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-200"
+                        >
+                            BscScan에서 확인하기
+                        </Button>
+                    </div>
+                </div>
+
+
+
 
 
                {/* list of sendbird users */}
